@@ -42,7 +42,7 @@ class LnHeightMapBuilder : public NodeDataModel
 public:
   LnHeightMapBuilder();
 
-  //std::shared_ptr<noise::module::Perlin> myModule;
+  std::shared_ptr<noise::module::Perlin> myModule;
 
   virtual
   ~LnHeightMapBuilder() {}

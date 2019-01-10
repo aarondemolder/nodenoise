@@ -21,7 +21,7 @@ LnHeightMapBuilder::LnHeightMapBuilder() : _label(new QLabel("LnHeightMapBuilder
 
 
     //need to adjust this to be able to acces myModule from lnPerlinModel
-    //myModule = std::make_shared<noise::module::Perlin>();
+    myModule = std::make_shared<noise::module::Perlin>();
 
     //std::weak_ptr<noise::module::Perlin> myModuleImport = myModule;
 
