@@ -44,6 +44,13 @@ public:
 
   std::shared_ptr<noise::module::Perlin> myModule;
 
+  //std::shared_ptr<noise::module::Perlin> imageDisplayModule;
+
+  noise::module::Perlin refmyModule;
+
+  void defaultImgRenderer();
+
+
   virtual
   ~LnPerlinModel() {}
 
@@ -61,13 +68,13 @@ public:
 
   unsigned int nPorts(PortType portType) const override;
 
-  std::shared_ptr<NodeData> outData(PortIndex port) override;
+  //std::shared_ptr<NodeData> outData(PortIndex port) override;
 
   void setInData(std::shared_ptr<NodeData> data, int) override;
 
   QWidget *embeddedWidget() override { return _label; }
 
-  bool resizable() const override { return true; }
+  //bool resizable() const override { return true; }
 
 public:
 
@@ -98,7 +105,7 @@ public:
       {
         case 0:
           return TerrainData().type();
-        case 1://unused
+        case 1:
           return PixmapData().type();
       }
       break;
@@ -110,21 +117,34 @@ public:
     return NodeDataType();
   }
 
+  std::shared_ptr<NodeData>outData(PortIndex port) override
+  {
+    if (port == 0)return std::make_shared<TerrainData>();
+
+    if (port ==1) return std::make_shared<PixmapData>(_pixmap);
+  }
+
 protected:
 
   bool eventFilter(QObject *object, QEvent *event) override;
 
 private slots:
 
-  void onTextEdited(QString const &string);
+  //void onTextEdited(QString const &string);
+
+  void onPixmapEdited(QPixmap const &pixmap);
 
 
 private:
 
+  //std::shared_ptr<PixmapData> _pixmap;
+
   QLabel * _label;
 
-  //QLineEdit * _moduleNameEdit;
+  QPixmap _pixmap;
 
-  //QTextEdit * _lineEdit;
+  //QPixmap _noiseimg;
+
+
 
 };

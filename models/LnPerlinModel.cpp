@@ -6,6 +6,12 @@
 #include <QtCore/QEvent>
 
 #include <noise/noise.h>
+#include <noiseutils.h>
+
+
+#include <QImage>
+#include <QPixmap>
+#include <QImageWriter>
 
 
 LnPerlinModel::LnPerlinModel() : _label(new QLabel("Perlin Noise Module"))
@@ -18,15 +24,13 @@ LnPerlinModel::LnPerlinModel() : _label(new QLabel("Perlin Noise Module"))
     f.setBold(true);
     f.setItalic(true);
     _label->setFont(f);
-    _label->setFixedSize(200, 200);
+    _label->setFixedSize(256, 256);
     _label->installEventFilter(this);
-
 
     //make pointer for module
     myModule = std::make_shared<noise::module::Perlin>();
-    //we can call our module data functions like this
-    myModule->SetFrequency(2.0);
 
+    defaultImgRenderer();
 }
 
 
@@ -50,7 +54,7 @@ unsigned int LnPerlinModel::nPorts(PortType portType) const
       break;
 
     case PortType::Out:
-      result = 1;
+      result = 2;
 
     default:
       break;
@@ -67,26 +71,33 @@ bool LnPerlinModel::eventFilter(QObject *object, QEvent *event)
     int w = _label->width();
     int h = _label->height();
 
-//    if (event->type() == QEvent::Resize)
-//    {
-//      auto d = std::dynamic_pointer_cast<PixmapData>(_nodeData);
-//      if (d)
-//      {
-//        _label->setPixmap(d->pixmap().scaled(w, h, Qt::KeepAspectRatio));
-//      }
-//    }
+    if (event->type() == QEvent::MouseButtonPress)
+    {
+
+      _label->setPixmap(_pixmap.scaled(w, h, Qt::KeepAspectRatio));
+
+      emit dataUpdated(1);
+
+      return true;
+    }
+    else if (event->type() == QEvent::Resize)
+    {
+      if (!_pixmap.isNull())
+        _label->setPixmap(_pixmap.scaled(w, h, Qt::KeepAspectRatio));
+    }
   }
 
   return false;
 }
 
-void LnPerlinModel::onTextEdited(QString const &string)
+void LnPerlinModel::onPixmapEdited(QPixmap const &pixmap)
 {
-  Q_UNUSED(string);
+  Q_UNUSED(pixmap);
 
+  _label->setPixmap(_pixmap.scaled(256, 256, Qt::KeepAspectRatio));
   std::cout<<"FreqOut "<< myModule->GetFrequency()<<"\n";
 
-  emit dataUpdated(0);
+  emit dataUpdated(1);
 
 }
 
@@ -102,33 +113,38 @@ void LnPerlinModel::setInData(std::shared_ptr<NodeData> data, int)
   if (freqData)
   {
     myModule->SetFrequency(freqData->number());
+    refmyModule.SetFrequency(freqData->number());
     //sets number input as label
     //_label->setText(freqData->numberAsText());
-    std::cout<<"FreqOut "<< myModule->GetFrequency()<<"\n";
+    //std::cout<<"FreqOut "<< myModule->GetFrequency()<<"\n";
   }
 
   if (lacData)
   {
     myModule->SetLacunarity(lacData->number());
-    std::cout<<"LacOut "<< myModule->GetLacunarity()<<"\n";
+    refmyModule.SetLacunarity(lacData->number());
+    //std::cout<<"LacOut "<< myModule->GetLacunarity()<<"\n";
   }
 
   if (octaveData)
   {
     myModule->SetOctaveCount(octaveData->number());
-    std::cout<<"OctaveOut "<< myModule->GetOctaveCount()<<"\n";
+    refmyModule.SetOctaveCount(octaveData->number());
+    //std::cout<<"OctaveOut "<< myModule->GetOctaveCount()<<"\n";
   }
 
   if (perData)
   {
     myModule->SetPersistence(perData->number());
-    std::cout<<"PerOut "<< myModule->GetPersistence()<<"\n";
+    refmyModule.SetPersistence(perData->number());
+    //std::cout<<"PerOut "<< myModule->GetPersistence()<<"\n";
   }
 
   if (seedData)
   {
     myModule->SetSeed(seedData->number());
-    std::cout<<"SeedOut "<< myModule->GetSeed()<<"\n";
+    refmyModule.SetSeed(seedData->number());
+    //std::cout<<"SeedOut "<< myModule->GetSeed()<<"\n";
   }
 
   if (qualityData)
@@ -136,34 +152,125 @@ void LnPerlinModel::setInData(std::shared_ptr<NodeData> data, int)
     if (qualityData->number()==0)
     {
         myModule->SetNoiseQuality(noise::QUALITY_FAST);
-        std::cout<<"QualityOut "<< myModule->GetNoiseQuality()<<"\n";
+        //std::cout<<"QualityOut "<< myModule->GetNoiseQuality()<<"\n";
     }
     if (qualityData->number()==1)
     {
         myModule->SetNoiseQuality(noise::QUALITY_STD);
-        std::cout<<"QualityOut "<< myModule->GetNoiseQuality()<<"\n";
+        //std::cout<<"QualityOut "<< myModule->GetNoiseQuality()<<"\n";
     }
     if (qualityData->number()==2)
     {
         myModule->SetNoiseQuality(noise::QUALITY_BEST);
-        std::cout<<"QualityOut "<< myModule->GetNoiseQuality()<<"\n";
+        //std::cout<<"QualityOut "<< myModule->GetNoiseQuality()<<"\n";
     }
   }
 
+  ///image processing for Perlin noise
 
-  //_label->adjustSize();
+  utils::NoiseMap heightMap;
+  utils::NoiseMapBuilderPlane heightMapBuilder;
+
+  heightMapBuilder.SetSourceModule (refmyModule);
+  heightMapBuilder.SetDestNoiseMap (heightMap);
+  heightMapBuilder.SetDestSize (256, 256);
+  heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);
+  heightMapBuilder.Build ();
+
+  utils::RendererImage renderer;
+  utils::Image image;
+  renderer.SetSourceNoiseMap (heightMap);
+  renderer.SetDestImage (image);
+
+  renderer.Render ();
+
+  ///this bit works for now, so we know the generation works
+//  utils::WriterBMP writer;
+//  writer.SetSourceImage (image);
+//  writer.SetDestFilename ("outimage.bmp");
+//  writer.WriteDestFile ();
+
+  QImage imageOut(256, 256, QImage::Format_RGB32);
+  QRgb value;
+
+  for(int x=0; x < image.GetWidth(); x++)
+      {
+          for(int y=0; y < image.GetHeight(); y++)
+          {
+                  utils::Color c = image.GetValue(x,y);
+                  value = qRgb(c.red, c.green, c.blue);
+                  imageOut.setPixel(x, y, value);
+          }
+      }
+
+  QTransform myTransform;
+  myTransform.rotate(180);
+  myTransform.scale(-1,1);
+  imageOut = imageOut.transformed(myTransform);
+
+///this part also works, so our Qimage has data
+//  QImageWriter writerQ("outimage.png", "png");
+//  writerQ.write(imageOut);
+
+//  std::cout<<"QimageWritten\n";
+
+  _pixmap = QPixmap::fromImage(imageOut);
+  _label->setPixmap(_pixmap.scaled(256, 256, Qt::KeepAspectRatio));
+
+  emit dataUpdated(1);
+
+}
+
+void LnPerlinModel::defaultImgRenderer()
+{
+
+    utils::NoiseMap heightMap;
+    utils::NoiseMapBuilderPlane heightMapBuilder;
+
+    heightMapBuilder.SetSourceModule (refmyModule);
+    heightMapBuilder.SetDestNoiseMap (heightMap);
+    heightMapBuilder.SetDestSize (256, 256);
+    heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);
+    heightMapBuilder.Build ();
+
+    utils::RendererImage renderer;
+    utils::Image image;
+    renderer.SetSourceNoiseMap (heightMap);
+    renderer.SetDestImage (image);
+
+    renderer.Render ();
+
+    QImage imageOut(256, 256, QImage::Format_RGB32);
+    QRgb value;
+
+    for(int x=0; x < image.GetWidth(); x++)
+        {
+            for(int y=0; y < image.GetHeight(); y++)
+            {
+                    utils::Color c = image.GetValue(x,y);
+                    value = qRgb(c.red, c.green, c.blue);
+                    imageOut.setPixel(x, y, value);
+            }
+        }
+
+    QTransform myTransform;
+    myTransform.rotate(180);
+    myTransform.scale(-1,1);
+    imageOut = imageOut.transformed(myTransform);
+
+    _pixmap = QPixmap::fromImage(imageOut);
+    _label->setPixmap(_pixmap.scaled(256, 256, Qt::KeepAspectRatio));
 }
 
 
-//now defined in the header
+///now defined in the header
 //NodeDataType LnPerlinModel::dataType(PortType, PortIndex) const
 //{
 //  return PerlinData().type();
 //}
 
-
-std::shared_ptr<NodeData>LnPerlinModel::outData(PortIndex)
-{
-    //return NULL;
-    return std::make_shared<TerrainData>();
-}
+//std::shared_ptr<NodeData>LnPerlinModel::outData(PortIndex)
+//{
+//    //return NULL;
+//    return std::make_shared<TerrainData>();
+//}

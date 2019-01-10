@@ -15,11 +15,12 @@ public:
 
   PixmapData(QPixmap const &pixmap) : _pixmap(pixmap) {}
 
-  NodeDataType type() const override { return {"pixmap", "P"}; }
+  NodeDataType type() const override { return {"pixmap", "Image"}; }
 
   QPixmap pixmap() const { return _pixmap; }
 
 private:
 
   QPixmap _pixmap;
+
 };
