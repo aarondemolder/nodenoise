@@ -5,7 +5,7 @@
 #include <QtWidgets/QLabel>
 //#include <QtWidgets/QTextEdit>
 
-#include "PerlinData.hpp"
+#include "TerrainData.hpp"
 
 #include "DecimalData.hpp"
 
@@ -97,7 +97,7 @@ public:
       switch (portIndex)
       {
         case 0:
-          return PerlinData().type();
+          return TerrainData().type();
         case 1://unused
           return PixmapData().type();
       }

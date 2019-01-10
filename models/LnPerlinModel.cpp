@@ -165,5 +165,5 @@ void LnPerlinModel::setInData(std::shared_ptr<NodeData> data, int)
 std::shared_ptr<NodeData>LnPerlinModel::outData(PortIndex)
 {
     //return NULL;
-    //return std::make_shared<PerlinData>();
+    return std::make_shared<TerrainData>();
 }

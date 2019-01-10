@@ -1,18 +1,18 @@
-#ifndef PERLINDATA_H
-#define PERLINDATA_H
+#ifndef TERRAINDATA_H
+#define TERRAINDATA_H
 
 #include <nodes/NodeDataModel>
 
 using QtNodes::NodeData;
 using QtNodes::NodeDataType;
 
-class PerlinData : public NodeData
+class TerrainData : public NodeData
 {
 public:
 
-  PerlinData() {}
+  TerrainData() {}
 
-  PerlinData(QString const &text) : _text(text) {}
+  TerrainData(QString const &text) : _text(text) {}
 
   NodeDataType type() const override { return NodeDataType {"terrain", "Terrain"}; }
 
@@ -26,4 +26,4 @@ private:
   QString _text;
 };
 
-#endif // PERLINDATA_H
+#endif // TERRAINDATA_H

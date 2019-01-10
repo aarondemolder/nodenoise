@@ -22,6 +22,8 @@
 #include "models/SeedSourceDataModel.hpp"
 #include "models/QualitySourceDataModel.hpp"
 
+#include "models/LnHeightMapBuilder.hpp"
+
 #include"models/MultiInputModel.hpp"
 
 
@@ -54,6 +56,7 @@ static std::shared_ptr<DataModelRegistry>registerDataModels()
   //libnoise nodes
   ret->registerModel<LnPerlinModel>("libNoise");
   ret->registerModel<QualitySourceDataModel>("libNoise");
+  ret->registerModel<LnHeightMapBuilder>("libNoise");
 
   //ret->registerModel<NaiveDataModel>();
 
