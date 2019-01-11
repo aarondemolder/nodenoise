@@ -88,8 +88,6 @@ public:
       {
         case 0:
           return TerrainData().type();
-        case 1://unused
-          return PixmapData().type();
       }
       break;
 
@@ -104,9 +102,15 @@ protected:
 
   bool eventFilter(QObject *object, QEvent *event) override;
 
+//public slots:
+
+//  void updateTerrain(std::shared_ptr<noise::module::Perlin>);
+
+
 private slots:
 
   void onTextEdited(QString const &string);
+
 
 
 private:

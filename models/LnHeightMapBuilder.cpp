@@ -1,5 +1,7 @@
 #include "LnHeightMapBuilder.hpp"
 
+#include "LnPerlinModel.hpp"
+
 //#include "DecimalData.hpp"
 #include "PixmapData.hpp"
 
@@ -21,7 +23,7 @@ LnHeightMapBuilder::LnHeightMapBuilder() : _label(new QLabel("LnHeightMapBuilder
 
 
     //need to adjust this to be able to acces myModule from lnPerlinModel
-    myModule = std::make_shared<noise::module::Perlin>();
+    //myModule = std::make_shared<noise::module::Perlin>();
 
     //std::weak_ptr<noise::module::Perlin> myModuleImport = myModule;
 
@@ -82,16 +84,28 @@ void LnHeightMapBuilder::onTextEdited(QString const &string)
 
 }
 
+
+
+
+
 void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
 {
-  auto terrainData = std::dynamic_pointer_cast<TerrainData>(data);
+
+    //auto moduleData = std::shared_ptr<noise::module::Perlin>();
+    auto terrainData = std::dynamic_pointer_cast<TerrainData>(data);
+
+    //connect(moduleData, &LnPerlinModel::noiseChanged,this, &LnHeightMapBuilder::updateTerrain);
+
+    //std::cout<<data->type()<<'\n';
 
   if (terrainData)
   {
+    //connect(terrainData, &LnPerlinModel::noiseChanged,this, &LnHeightMapBuilder::updateTerrain);
+
     //myModule->SetFrequency(freqData->number());
     //sets number input as label
     //_label->setText(freqData->numberAsText());
-    std::cout<<"Terrain Data Present "<< myModule->GetFrequency()<<"\n";
+    //std::cout<<"Terrain Data Present "<< myModule->GetFrequency()<<"\n";
   }
 
 
@@ -99,7 +113,10 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
   //_label->adjustSize();
 }
 
-
+//void LnHeightMapBuilder::updateTerrain(std::shared_ptr<noise::module::Perlin> _myModule)
+//{
+//    std::cout<<"FreqOut "<< _myModule->GetFrequency()<<"\n";
+//}
 
 
 std::shared_ptr<NodeData>LnHeightMapBuilder::outData(PortIndex)

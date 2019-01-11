@@ -13,6 +13,7 @@
 #include "models/NumberSourceDataModel.hpp"
 #include "models/ImageShowModel.hpp"
 #include "models/ImageLoaderModel.hpp"
+#include "models/ImageWriterModel.hpp"
 
 #include "models/LnPerlinModel.hpp"
 #include "models/FreqSourceDataModel.hpp"
@@ -52,6 +53,7 @@ static std::shared_ptr<DataModelRegistry>registerDataModels()
   //image nodes
   ret->registerModel<ImageShowModel>("Image");
   ret->registerModel<ImageLoaderModel>("Image");
+  ret->registerModel<ImageWriterModel>("Image");
 
   //libnoise nodes
   ret->registerModel<LnPerlinModel>("libNoise");
@@ -108,9 +110,11 @@ int main(int argc, char *argv[])
   QObject::connect(saveAction, &QAction::triggered, scene, &FlowScene::save);
   QObject::connect(loadAction, &QAction::triggered, scene, &FlowScene::load);
 
+
   mainWidget.setWindowTitle("Terrain Generator");
   mainWidget.resize(800, 600);
   mainWidget.show();
+
 
   return app.exec();
 }

@@ -172,6 +172,7 @@ void LnPerlinModel::setInData(std::shared_ptr<NodeData> data, int)
   utils::NoiseMapBuilderPlane heightMapBuilder;
 
   heightMapBuilder.SetSourceModule (refmyModule);
+  //heightMapBuilder.SetSourceModule (myModule);
   heightMapBuilder.SetDestNoiseMap (heightMap);
   heightMapBuilder.SetDestSize (256, 256);
   heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);
@@ -183,12 +184,6 @@ void LnPerlinModel::setInData(std::shared_ptr<NodeData> data, int)
   renderer.SetDestImage (image);
 
   renderer.Render ();
-
-  ///this bit works for now, so we know the generation works
-//  utils::WriterBMP writer;
-//  writer.SetSourceImage (image);
-//  writer.SetDestFilename ("outimage.bmp");
-//  writer.WriteDestFile ();
 
   QImage imageOut(256, 256, QImage::Format_RGB32);
   QRgb value;
@@ -208,16 +203,12 @@ void LnPerlinModel::setInData(std::shared_ptr<NodeData> data, int)
   myTransform.scale(-1,1);
   imageOut = imageOut.transformed(myTransform);
 
-///this part also works, so our Qimage has data
-//  QImageWriter writerQ("outimage.png", "png");
-//  writerQ.write(imageOut);
-
-//  std::cout<<"QimageWritten\n";
-
   _pixmap = QPixmap::fromImage(imageOut);
   _label->setPixmap(_pixmap.scaled(256, 256, Qt::KeepAspectRatio));
 
+
   emit dataUpdated(1);
+  //emit noiseChanged(myModule);
 
 }
 
@@ -261,16 +252,3 @@ void LnPerlinModel::defaultImgRenderer()
     _pixmap = QPixmap::fromImage(imageOut);
     _label->setPixmap(_pixmap.scaled(256, 256, Qt::KeepAspectRatio));
 }
-
-
-///now defined in the header
-//NodeDataType LnPerlinModel::dataType(PortType, PortIndex) const
-//{
-//  return PerlinData().type();
-//}
-
-//std::shared_ptr<NodeData>LnPerlinModel::outData(PortIndex)
-//{
-//    //return NULL;
-//    return std::make_shared<TerrainData>();
-//}

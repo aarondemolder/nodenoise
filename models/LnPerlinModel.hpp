@@ -44,8 +44,6 @@ public:
 
   std::shared_ptr<noise::module::Perlin> myModule;
 
-  //std::shared_ptr<noise::module::Perlin> imageDisplayModule;
-
   noise::module::Perlin refmyModule;
 
   void defaultImgRenderer();
@@ -68,13 +66,9 @@ public:
 
   unsigned int nPorts(PortType portType) const override;
 
-  //std::shared_ptr<NodeData> outData(PortIndex port) override;
-
   void setInData(std::shared_ptr<NodeData> data, int) override;
 
   QWidget *embeddedWidget() override { return _label; }
-
-  //bool resizable() const override { return true; }
 
 public:
 
@@ -128,23 +122,21 @@ protected:
 
   bool eventFilter(QObject *object, QEvent *event) override;
 
-private slots:
 
-  //void onTextEdited(QString const &string);
+//signals:
+
+//  void noiseChanged(std::shared_ptr<noise::module::Perlin>);
+
+private slots:
 
   void onPixmapEdited(QPixmap const &pixmap);
 
 
 private:
 
-  //std::shared_ptr<PixmapData> _pixmap;
-
   QLabel * _label;
 
   QPixmap _pixmap;
-
-  //QPixmap _noiseimg;
-
 
 
 };
