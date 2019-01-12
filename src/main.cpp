@@ -6,6 +6,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QMenuBar>
+#include <QOpenGLWidget>
 
 #include <nodes/DataModelRegistry>
 
@@ -14,6 +15,7 @@
 #include "models/ImageShowModel.hpp"
 #include "models/ImageLoaderModel.hpp"
 #include "models/ImageWriterModel.hpp"
+#include "models/View3DModel.hpp"
 
 #include "models/LnPerlinModel.hpp"
 #include "models/FreqSourceDataModel.hpp"
@@ -41,6 +43,8 @@ static std::shared_ptr<DataModelRegistry>registerDataModels()
 
   //notes node
   ret->registerModel<TextSourceDataModel>("Text");
+
+  ret->registerModel<View3DModel>("3D");
 
   //number input
   //ret->registerModel<NumberSourceDataModel>("Number");
@@ -91,6 +95,22 @@ int main(int argc, char *argv[])
 {
   QApplication app(argc, argv);
 
+  QSurfaceFormat format;
+  format.setSamples(4);
+  #if defined(__APPLE__)
+      // at present mac osx Mountain Lion only supports GL3.2
+      // the new mavericks will have GL 4.x so can change
+      format.setMajorVersion(4);
+      format.setMinorVersion(1);
+  #else
+      format.setMajorVersion(4);
+      format.setMinorVersion(3);
+  #endif
+  format.setProfile(QSurfaceFormat::CoreProfile);
+  format.setDepthBufferSize(24);
+
+  QSurfaceFormat::setDefaultFormat(format);
+
   setStyle();
 
   QWidget mainWidget;
@@ -109,6 +129,8 @@ int main(int argc, char *argv[])
 
   QObject::connect(saveAction, &QAction::triggered, scene, &FlowScene::save);
   QObject::connect(loadAction, &QAction::triggered, scene, &FlowScene::load);
+
+  std::cout<<"Profile is "<<format.majorVersion()<<" "<<format.minorVersion()<<"\n";
 
 
   mainWidget.setWindowTitle("Terrain Generator");

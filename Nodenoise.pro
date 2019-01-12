@@ -3,10 +3,17 @@ TARGET=Nodenoise
 #requires devtoolkit7 to be compiler on laptop
 CONFIG += c++17
 
+QT+= core widgets gui opengl
+
+
 #CONFIG-=app_bundle
 SOURCES += $$PWD/src/main.cpp \
                 $$PWD/nodes/*.cpp \
-                $$PWD/models/*.cpp
+                $$PWD/models/*.cpp \
+                $$PWD/src/glwidget.cpp \
+                #$$PWD/src/glwindow.cpp \
+                #$$PWD/src/glmainwindow.cpp \
+                $$PWD/src/logo.cpp
 
 HEADERS+= $$PWD/include/TextData.hpp \
                 $$PWD/include/PixmapData.hpp \
@@ -20,11 +27,12 @@ HEADERS+= $$PWD/include/TextData.hpp \
                 $$PWD/include/PerData.hpp \
                 $$PWD/include/OctaveData.hpp \
                 $$PWD/nodes/*.hpp \
-                $$PWD/models/*.hpp
+                $$PWD/models/*.hpp \
+                $$PWD/include/glwidget.h \
+                #$$PWD/include/glwindow.h \
+                #$$PWD/include/glmainwindow.h \
+                $$PWD/include/logo.h
 
-#OTHER_FILES+=$$PWD/tests/*.rib
-
-QT+= core widgets gui opengl
 
 INCLUDEPATH+=$$PWD/include \
                 /home/ademolder/include
@@ -34,19 +42,28 @@ INCLUDEPATH+=/home/ademolder/include
 LIBS += -L/home/ademolder/lib -lnoise -lnoiseutils
 
 #for compiling on the laptop build
+
 LIBS += -L/usr/lib64/nvidia
 LIBS += -L/home/aarondemolder/lib -lnoise -lnoiseutils
 INCLUDEPATH+=$$PWD/include \
                 /home/aarondemolder/include
+
+#end options for laptop build
 
 DEFINES+=NODE_EDITOR_STATIC
 MOC_DIR=$$PWD/moc
 OBJECTS_DIR=$$PWD/obj
 UI_HEADERS_DIR=$$PWD/include
 
-#FORMS+=$$PWD/ui/ShaderParams.ui \
-#    ui/MainWindow.ui
-
 RESOURCES+= $$PWD/nodes/resources/resources.qrc
 
-
+#NGL Seems to conflict with the node framework, gl3w related
+#NGLPATH=$$(NGLDIR)
+#isEmpty(NGLPATH){
+#        message("including $HOME/NGL")
+#        include($(HOME)/NGL/UseNGL.pri)
+#}
+#else{
+#        message("Using custom NGL location")
+#        include($(NGLDIR)/UseNGL.pri)
+#}
