@@ -3,6 +3,8 @@
 
 #include <nodes/NodeDataModel>
 
+#include <noise/noise.h>
+
 using QtNodes::NodeData;
 using QtNodes::NodeDataType;
 
@@ -19,6 +21,7 @@ public:
   QString text() const { return _text; }
 
   //double number() const { return _number; }
+
 
 
 private:

@@ -8,6 +8,11 @@
 #include <QMatrix4x4>
 #include "logo.h"
 
+#include <nodes/NodeGraphicsObject.hpp>
+using QtNodes::NodeGraphicsObject;
+
+#include<nodes/Node>
+
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
 class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
@@ -16,7 +21,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 
 public:
     GLWidget(QWidget *parent = 0);
-    ~GLWidget();
+    ~GLWidget() override;
 
 public slots:
     void setXRotation(int angle);
@@ -35,6 +40,7 @@ protected:
     void resizeGL(int width, int height) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
+    void keyPressEvent(QKeyEvent * event) override;
 
 private:
     void setupVertexAttribs();
@@ -55,7 +61,7 @@ private:
     QMatrix4x4 m_proj;
     QMatrix4x4 m_camera;
     QMatrix4x4 m_world;
-    static bool m_transparent;
+
 };
 
 #endif

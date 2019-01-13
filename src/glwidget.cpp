@@ -6,6 +6,7 @@
 #include <iostream>
 
 
+
 GLWidget::GLWidget(QWidget *parent): QOpenGLWidget(parent), m_xRot(0), m_yRot(0), m_zRot(0), m_program(0)
 {
     m_core = QSurfaceFormat::defaultFormat().profile() == QSurfaceFormat::CoreProfile;
@@ -15,6 +16,7 @@ GLWidget::GLWidget(QWidget *parent): QOpenGLWidget(parent), m_xRot(0), m_yRot(0)
 GLWidget::~GLWidget()
 {
     cleanup();
+    std::cout<<"destructor GL\n";
 }
 
 //QSize GLWidget::minimumSizeHint() const
@@ -62,11 +64,13 @@ void GLWidget::setZRotation(int angle)
         m_zRot = angle;
         emit zRotationChanged(angle);
         update();
+
     }
 }
 
 void GLWidget::cleanup()
 {
+    std::cout<<"cleaning? GL\n";
     if (m_program == nullptr)
         return;
     makeCurrent();
@@ -133,18 +137,11 @@ static const char *fragmentShaderSource =
 
 void GLWidget::initializeGL()
 {
-    // In this example the widget's corresponding top-level window can change
-    // several times during the widget's lifetime. Whenever this happens, the
-    // QOpenGLWidget's associated context is destroyed and a new one is created.
-    // Therefore we have to be prepared to clean up the resources on the
-    // aboutToBeDestroyed() signal, instead of the destructor. The emission of
-    // the signal will be followed by an invocation of initializeGL() where we
-    // can recreate all resources.
-
     std::cout<<"init GL\n";
-    connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &GLWidget::cleanup);
+    //connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &GLWidget::cleanup);
 
     initializeOpenGLFunctions();
+    //makeCurrent();
     glClearColor(0, 0, 0, 0);
 
     m_program = new QOpenGLShaderProgram;
@@ -200,7 +197,7 @@ void GLWidget::setupVertexAttribs()
 
 void GLWidget::paintGL()
 {
-    std::cout<<"paint GL\n";
+    //std::cout<<"paint GL\n";
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -220,7 +217,7 @@ void GLWidget::paintGL()
     glDrawArrays(GL_TRIANGLES, 0, m_logo.vertexCount());
 
     m_program->release();
-    std::cout<<"done paint GL\n";
+    //std::cout<<"done paint GL\n";
 }
 
 void GLWidget::resizeGL(int w, int h)
@@ -235,6 +232,8 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 {
     m_lastPos = event->pos();
     std::cout<<"click\n";
+    update();
+    event->accept();
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
@@ -250,4 +249,20 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
         setZRotation(m_zRot + 8 * dx);
     }
     m_lastPos = event->pos();
+    update();
+
+    event->accept();
+}
+
+//example
+void GLWidget::keyPressEvent( QKeyEvent * event )
+{
+    int dy = event->key() - m_lastPos.y();
+
+    if( event->key() == Qt::Key_A )
+    {
+        setXRotation(m_xRot + 8 * dy);
+    }
+    event->accept();
+    update();
 }

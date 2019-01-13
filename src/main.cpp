@@ -18,6 +18,8 @@
 #include "models/View3DModel.hpp"
 
 #include "models/LnPerlinModel.hpp"
+#include "models/LnBillowModel.hpp"
+#include "models/LnRidgedMultiModel.hpp"
 #include "models/FreqSourceDataModel.hpp"
 #include "models/LacSourceDataModel.hpp"
 #include "models/OctaveSourceDataModel.hpp"
@@ -59,8 +61,11 @@ static std::shared_ptr<DataModelRegistry>registerDataModels()
   ret->registerModel<ImageLoaderModel>("Image");
   ret->registerModel<ImageWriterModel>("Image");
 
+
   //libnoise nodes
   ret->registerModel<LnPerlinModel>("libNoise");
+  ret->registerModel<LnBillowModel>("libNoise");
+  ret->registerModel<LnRidgedMultiModel>("libNoise");
   ret->registerModel<QualitySourceDataModel>("libNoise");
   ret->registerModel<LnHeightMapBuilder>("libNoise");
 

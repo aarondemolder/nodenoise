@@ -12,12 +12,15 @@
 
 #include "glwidget.h"
 
+
+
 using QtNodes::PortType;
 using QtNodes::PortIndex;
 using QtNodes::NodeData;
 using QtNodes::NodeDataType;
 using QtNodes::NodeDataModel;
 using QtNodes::NodeValidationState;
+
 
 
 /// The model dictates the number of inputs and outputs for the Node.
@@ -29,8 +32,6 @@ class View3DModel : public NodeDataModel
 public:
 
   View3DModel();
-
-  //View3DModel(QWidget *parent);
 
   virtual
   ~View3DModel() {}
@@ -58,9 +59,10 @@ public:
   bool resizable() const override { return true; }
 
 
+
 protected:
 
-  bool eventFilter(QObject *object, QEvent *event) override;
+  //bool eventFilter(QObject *object, QEvent *event) override;
 
 private:
 
