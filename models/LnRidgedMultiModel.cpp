@@ -1,37 +1,20 @@
 #include "LnRidgedMultiModel.hpp"
 
-//#include "DecimalData.hpp"
-#include "PixmapData.hpp"
-
 #include <QtCore/QEvent>
 
 #include <noise/noise.h>
 #include <noiseutils.h>
-
 
 #include <QImage>
 #include <QPixmap>
 #include <QImageWriter>
 
 
-LnRidgedMultiModel::LnRidgedMultiModel() : _label(new QLabel("LnRidgedMultiModel Module"))
+LnRidgedMultiModel::LnRidgedMultiModel() : _label(new QLabel("RidgedMulti Noise Module"))
 {
-    //connect(_moduleNameEdit, &QLineEdit::textEdited,this, &LnPerlinModel::onTextEdited);
-
-    //text bits
-    _label->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
-    QFont f = _label->font();
-    f.setBold(true);
-    f.setItalic(true);
-    _label->setFont(f);
-    _label->setFixedSize(256, 256);
-    _label->installEventFilter(this);
-
-    //make pointer for module
-    myModule = std::make_shared<noise::module::RidgedMulti>();
-
     defaultImgRenderer();
 }
+
 
 
 unsigned int LnRidgedMultiModel::nPorts(PortType portType) const
@@ -45,7 +28,7 @@ unsigned int LnRidgedMultiModel::nPorts(PortType portType) const
       break;
 
     case PortType::Out:
-      result = 2;
+      result = 3;
 
     default:
       break;
@@ -67,7 +50,7 @@ bool LnRidgedMultiModel::eventFilter(QObject *object, QEvent *event)
 
       _label->setPixmap(_pixmap.scaled(w, h, Qt::KeepAspectRatio));
 
-      emit dataUpdated(1);
+      emit dataUpdated(2);
 
       return true;
     }
@@ -86,9 +69,8 @@ void LnRidgedMultiModel::onPixmapEdited(QPixmap const &pixmap)
   Q_UNUSED(pixmap);
 
   _label->setPixmap(_pixmap.scaled(256, 256, Qt::KeepAspectRatio));
-  std::cout<<"FreqOut "<< myModule->GetFrequency()<<"\n";
 
-  emit dataUpdated(1);
+  emit dataUpdated(2);
 
 }
 
@@ -97,73 +79,51 @@ void LnRidgedMultiModel::setInData(std::shared_ptr<NodeData> data, int)
   auto freqData = std::dynamic_pointer_cast<FreqData>(data);
   auto lacData = std::dynamic_pointer_cast<LacData>(data);
   auto octaveData = std::dynamic_pointer_cast<OctaveData>(data);
-  auto perData = std::dynamic_pointer_cast<PerData>(data);
   auto seedData = std::dynamic_pointer_cast<SeedData>(data);
   auto qualityData = std::dynamic_pointer_cast<QualityData>(data);
 
   if (freqData)
   {
-    myModule->SetFrequency(freqData->number());
-    refmyModule.SetFrequency(freqData->number());
-    //sets number input as label
-    //_label->setText(freqData->numberAsText());
-    //std::cout<<"FreqOut "<< myModule->GetFrequency()<<"\n";
+    _myRidgeModule.SetFrequency(freqData->number());
   }
 
   if (lacData)
   {
-    myModule->SetLacunarity(lacData->number());
-    refmyModule.SetLacunarity(lacData->number());
-    //std::cout<<"LacOut "<< myModule->GetLacunarity()<<"\n";
+    _myRidgeModule.SetLacunarity(lacData->number());
   }
 
   if (octaveData)
   {
-    myModule->SetOctaveCount(octaveData->number());
-    refmyModule.SetOctaveCount(octaveData->number());
-    //std::cout<<"OctaveOut "<< myModule->GetOctaveCount()<<"\n";
+    _myRidgeModule.SetOctaveCount(octaveData->number());
   }
-
-//  if (perData)
-//  {
-//    myModule->SetPersistence(perData->number());
-//    refmyModule.SetPersistence(perData->number());
-//    //std::cout<<"PerOut "<< myModule->GetPersistence()<<"\n";
-//  }
 
   if (seedData)
   {
-    myModule->SetSeed(seedData->number());
-    refmyModule.SetSeed(seedData->number());
-    //std::cout<<"SeedOut "<< myModule->GetSeed()<<"\n";
+    _myRidgeModule.SetSeed(seedData->number());
   }
 
   if (qualityData)
   {
     if (qualityData->number()==0)
     {
-        myModule->SetNoiseQuality(noise::QUALITY_FAST);
-        //std::cout<<"QualityOut "<< myModule->GetNoiseQuality()<<"\n";
+        _myRidgeModule.SetNoiseQuality(noise::QUALITY_FAST);
     }
     if (qualityData->number()==1)
     {
-        myModule->SetNoiseQuality(noise::QUALITY_STD);
-        //std::cout<<"QualityOut "<< myModule->GetNoiseQuality()<<"\n";
+        _myRidgeModule.SetNoiseQuality(noise::QUALITY_STD);
     }
     if (qualityData->number()==2)
     {
-        myModule->SetNoiseQuality(noise::QUALITY_BEST);
-        //std::cout<<"QualityOut "<< myModule->GetNoiseQuality()<<"\n";
+        _myRidgeModule.SetNoiseQuality(noise::QUALITY_BEST);
     }
   }
 
-  ///image processing for Perlin noise
+  ///image preview processing
 
   utils::NoiseMap heightMap;
   utils::NoiseMapBuilderPlane heightMapBuilder;
 
-  heightMapBuilder.SetSourceModule (refmyModule);
-  //heightMapBuilder.SetSourceModule (myModule);
+  heightMapBuilder.SetSourceModule (_myRidgeModule);
   heightMapBuilder.SetDestNoiseMap (heightMap);
   heightMapBuilder.SetDestSize (256, 256);
   heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);
@@ -198,8 +158,9 @@ void LnRidgedMultiModel::setInData(std::shared_ptr<NodeData> data, int)
   _label->setPixmap(_pixmap.scaled(256, 256, Qt::KeepAspectRatio));
 
 
+  emit dataUpdated(0);
   emit dataUpdated(1);
-  //emit noiseChanged(myModule);
+  emit dataUpdated(2);
 
 }
 
@@ -209,7 +170,7 @@ void LnRidgedMultiModel::defaultImgRenderer()
     utils::NoiseMap heightMap;
     utils::NoiseMapBuilderPlane heightMapBuilder;
 
-    heightMapBuilder.SetSourceModule (refmyModule);
+    heightMapBuilder.SetSourceModule (_myRidgeModule);
     heightMapBuilder.SetDestNoiseMap (heightMap);
     heightMapBuilder.SetDestSize (256, 256);
     heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);

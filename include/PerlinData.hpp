@@ -1,9 +1,9 @@
-//DEMONSTRATION
-
 #ifndef PERLINDATA_H
 #define PERLINDATA_H
 
 #include <nodes/NodeDataModel>
+
+#include <noise/noise.h>
 
 using QtNodes::NodeData;
 using QtNodes::NodeDataType;
@@ -14,24 +14,18 @@ public:
 
   PerlinData() {}
 
-  PerlinData(QString const &text) : _text(text) {}
+  PerlinData(noise::module::Perlin const &myModule) : _myModule(myModule) {}
 
-  NodeDataType type() const override { return NodeDataType {"perlin", "Perlin"}; }
+  NodeDataType type() const override { return NodeDataType {"perlin", "Terrain"}; }
 
-  //NodeDataType type() const override { return NodeDataType {"text", "Test"}; }
-
-  QString text() const { return _text; }
-
-
-
-  //add our frequency and etc definitions here? we need different classes for the different datatypes?
-
- // double number() const { return _number; }
+  noise::module::Perlin myModule() const {return _myModule;}
 
 
 private:
 
-  QString _text;
+  noise::module::Perlin _myModule;
+
+
 };
 
-#endif // PERLINDATA_H
+#endif // TERRAINDATA_H

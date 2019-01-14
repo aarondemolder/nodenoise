@@ -1,13 +1,10 @@
 #pragma once
 
 #include <QtCore/QObject>
-//#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QLabel>
-//#include <QtWidgets/QTextEdit>
 
 #include "TerrainData.hpp"
-
-#include "DecimalData.hpp"
+#include "IdentifierData.hpp"
 
 #include "FreqData.hpp"
 #include "LacData.hpp"
@@ -42,10 +39,6 @@ class LnRidgedMultiModel : public NodeDataModel
 public:
   LnRidgedMultiModel();
 
-  std::shared_ptr<noise::module::RidgedMulti> myModule;
-
-  noise::module::RidgedMulti refmyModule;
-
   void defaultImgRenderer();
 
 
@@ -54,11 +47,11 @@ public:
 
 public:
 
-  QString caption() const override { return QString("Ridged Multi Model"); }
+  QString caption() const override { return QString("RidgedMulti Model"); }
 
   bool captionVisible() const override { return true; }
 
-  static QString Name() { return QString("Ridged Multi Generator"); }
+  static QString Name() { return QString("RidgedMulti Noise Generator"); }
 
   QString name() const override { return LnRidgedMultiModel::Name(); }
 
@@ -96,8 +89,10 @@ public:
       switch (portIndex)
       {
         case 0:
-          return TerrainData().type();
+          return IdentifierData().type();
         case 1:
+          return TerrainData().type();
+        case 2:
           return PixmapData().type();
       }
       break;
@@ -111,19 +106,17 @@ public:
 
   std::shared_ptr<NodeData>outData(PortIndex port) override
   {
-    if (port == 0)return std::make_shared<TerrainData>();
+    if (port == 0)return std::make_shared<IdentifierData>(_identifier);
 
-    if (port ==1) return std::make_shared<PixmapData>(_pixmap);
+    if (port == 1)return std::make_shared<TerrainData>(_myRidgeModule);
+
+    if (port == 2) return std::make_shared<PixmapData>(_pixmap);
   }
 
 protected:
 
   bool eventFilter(QObject *object, QEvent *event) override;
 
-
-//signals:
-
-//  void noiseChanged(std::shared_ptr<noise::module::Perlin>);
 
 private slots:
 
@@ -135,6 +128,10 @@ private:
   QLabel * _label;
 
   QPixmap _pixmap;
+
+  QString _identifier = "ridge";
+
+  noise::module::RidgedMulti _myRidgeModule;
 
 
 };

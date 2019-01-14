@@ -17,8 +17,11 @@ SOURCES += $$PWD/src/main.cpp \
 
 HEADERS+= $$PWD/include/TextData.hpp \
                 $$PWD/include/PixmapData.hpp \
-                $$PWD/include/PerlinData.hpp \
+                $$PWD/include/IdentifierData.hpp \
                 $$PWD/include/TerrainData.hpp \
+                $$PWD/include/HeightMapData.hpp \
+                $$PWD/include/ResolutionData.hpp \
+                $$PWD/include/BoundsData.hpp \
                 $$PWD/include/QualityData.hpp \
                 $$PWD/include/DecimalData.hpp \
                 $$PWD/include/SeedData.hpp \

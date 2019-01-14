@@ -5,7 +5,10 @@
 #include <QtWidgets/QLabel>
 //#include <QtWidgets/QTextEdit>
 
+#include "IdentifierData.hpp"
 #include "TerrainData.hpp"
+#include "HeightMapData.hpp"
+#include "ResolutionData.hpp"
 
 #include "DecimalData.hpp"
 
@@ -42,7 +45,7 @@ class LnHeightMapBuilder : public NodeDataModel
 public:
   LnHeightMapBuilder();
 
-  std::shared_ptr<noise::module::Perlin> myModule;
+  //std::shared_ptr<noise::module::Perlin> myModule;
 
   virtual
   ~LnHeightMapBuilder() {}
@@ -78,8 +81,12 @@ public:
       case PortType::In:
         switch (portIndex)
         {
-            case 0:
-                return TerrainData().type();
+        case 0:
+            return IdentifierData().type();
+        case 1:
+            return TerrainData().type();
+        case 2:
+            return ResolutionData().type();
         }
         break;
 
@@ -87,7 +94,7 @@ public:
       switch (portIndex)
       {
         case 0:
-          return TerrainData().type();
+          return HeightMapData().type();
       }
       break;
 
@@ -117,8 +124,12 @@ private:
 
   QLabel * _label;
 
-  //QLineEdit * _moduleNameEdit;
+  QString _idText;
 
-  //QTextEdit * _lineEdit;
+  int _idSet = 0;
+
+  utils::NoiseMapBuilderPlane _heightMapBuilder;
+
+  int _resSet = 0;
 
 };

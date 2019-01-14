@@ -28,6 +28,7 @@
 #include "models/QualitySourceDataModel.hpp"
 
 #include "models/LnHeightMapBuilder.hpp"
+#include "models/ResolutionSourceDataModel.hpp"
 
 #include"models/MultiInputModel.hpp"
 
@@ -68,6 +69,7 @@ static std::shared_ptr<DataModelRegistry>registerDataModels()
   ret->registerModel<LnRidgedMultiModel>("libNoise");
   ret->registerModel<QualitySourceDataModel>("libNoise");
   ret->registerModel<LnHeightMapBuilder>("libNoise");
+  ret->registerModel<ResolutionSourceDataModel>("libNoise");
 
   //ret->registerModel<NaiveDataModel>();
 

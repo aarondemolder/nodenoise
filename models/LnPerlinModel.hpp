@@ -1,13 +1,10 @@
 #pragma once
 
 #include <QtCore/QObject>
-//#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QLabel>
-//#include <QtWidgets/QTextEdit>
 
 #include "TerrainData.hpp"
-
-#include "DecimalData.hpp"
+#include "IdentifierData.hpp"
 
 #include "FreqData.hpp"
 #include "LacData.hpp"
@@ -41,10 +38,6 @@ class LnPerlinModel : public NodeDataModel
 
 public:
   LnPerlinModel();
-
-  std::shared_ptr<noise::module::Perlin> myModule;
-
-  noise::module::Perlin refmyModule;
 
   void defaultImgRenderer();
 
@@ -98,8 +91,10 @@ public:
       switch (portIndex)
       {
         case 0:
-          return TerrainData().type();
+          return IdentifierData().type();
         case 1:
+          return TerrainData().type();
+        case 2:
           return PixmapData().type();
       }
       break;
@@ -113,19 +108,17 @@ public:
 
   std::shared_ptr<NodeData>outData(PortIndex port) override
   {
-    if (port == 0)return std::make_shared<TerrainData>();
+    if (port == 0)return std::make_shared<IdentifierData>(_identifier);
 
-    if (port ==1) return std::make_shared<PixmapData>(_pixmap);
+    if (port == 1)return std::make_shared<TerrainData>(_myPerlinModule);
+
+    if (port == 2) return std::make_shared<PixmapData>(_pixmap);
   }
 
 protected:
 
   bool eventFilter(QObject *object, QEvent *event) override;
 
-
-//signals:
-
-//  void noiseChanged(std::shared_ptr<noise::module::Perlin>);
 
 private slots:
 
@@ -137,6 +130,10 @@ private:
   QLabel * _label;
 
   QPixmap _pixmap;
+
+  QString _identifier = "perlin";
+
+  noise::module::Perlin _myPerlinModule;
 
 
 };

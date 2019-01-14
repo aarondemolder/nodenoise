@@ -14,19 +14,28 @@ public:
 
   TerrainData() {}
 
-  TerrainData(QString const &text) : _text(text) {}
+  TerrainData(noise::module::Perlin const &myPerlinModule) : _myPerlinModule(myPerlinModule) {}
+
+  TerrainData(noise::module::RidgedMulti const &myRidgeModule) : _myRidgeModule(myRidgeModule) {}
+
+  TerrainData(noise::module::Billow const &myBillowModule) : _myBillowModule(myBillowModule) {}
 
   NodeDataType type() const override { return NodeDataType {"terrain", "Terrain"}; }
 
-  QString text() const { return _text; }
+  noise::module::Perlin myPerlinModule() const {return _myPerlinModule;}
 
-  //double number() const { return _number; }
+  noise::module::RidgedMulti myRidgeModule() const {return _myRidgeModule;}
 
-
+  noise::module::Billow myBillowModule() const {return _myBillowModule;}
 
 private:
 
-  QString _text;
+  noise::module::Perlin _myPerlinModule;
+
+  noise::module::RidgedMulti _myRidgeModule;
+
+  noise::module::Billow _myBillowModule;
+
 };
 
 #endif // TERRAINDATA_H

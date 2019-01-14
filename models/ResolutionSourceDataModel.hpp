@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-class QualityData;
+class ResolutionData;
 
 using QtNodes::PortType;
 using QtNodes::PortIndex;
@@ -18,23 +18,23 @@ using QtNodes::NodeValidationState;
 
 /// The model dictates the number of inputs and outputs for the Node.
 /// In this example it has no logic.
-class QualitySourceDataModel : public NodeDataModel
+class ResolutionSourceDataModel : public NodeDataModel
 {
   Q_OBJECT
 
 public:
-  QualitySourceDataModel();
+  ResolutionSourceDataModel();
 
   virtual
-  ~QualitySourceDataModel() {}
+  ~ResolutionSourceDataModel() {}
 
 public:
 
-  QString caption() const override { return QStringLiteral("Quality Source"); }
+  QString caption() const override { return QStringLiteral("Resolution Source"); }
 
   bool captionVisible() const override { return false; }
 
-  QString name() const override { return QStringLiteral("Quality Source"); }
+  QString name() const override { return QStringLiteral("Resolution Source"); }
 
 public:
 
@@ -60,7 +60,7 @@ private slots:
 
 private:
 
-  std::shared_ptr<QualityData> _number;
+  std::shared_ptr<ResolutionData> _number;
 
   QComboBox * _comboBox;
 

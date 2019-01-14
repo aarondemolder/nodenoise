@@ -8,6 +8,7 @@
 #include <QtCore/QEvent>
 
 #include <noise/noise.h>
+#include <noiseutils.h>
 
 
 LnHeightMapBuilder::LnHeightMapBuilder() : _label(new QLabel("LnHeightMapBuilder"))
@@ -21,15 +22,6 @@ LnHeightMapBuilder::LnHeightMapBuilder() : _label(new QLabel("LnHeightMapBuilder
     _label->setFixedSize(200, 200);
     _label->installEventFilter(this);
 
-
-    //need to adjust this to be able to acces myModule from lnPerlinModel
-    //myModule = std::make_shared<noise::module::Perlin>();
-
-    //std::weak_ptr<noise::module::Perlin> myModuleImport = myModule;
-
-    //we can call our module data functions like this
-    //myModule->SetFrequency(2.0);
-
 }
 
 
@@ -40,7 +32,7 @@ unsigned int LnHeightMapBuilder::nPorts(PortType portType) const
   switch (portType)
   {
     case PortType::In:
-      result = 1;
+      result = 3;
       break;
 
     case PortType::Out:
@@ -78,7 +70,7 @@ void LnHeightMapBuilder::onTextEdited(QString const &string)
 {
   Q_UNUSED(string);
 
-  std::cout<<"FreqOut "<< myModule->GetFrequency()<<"\n";
+  //std::cout<<"FreqOut "<< _myPerlinModule->GetFrequency()<<"\n";
 
   emit dataUpdated(0);
 
@@ -90,37 +82,103 @@ void LnHeightMapBuilder::onTextEdited(QString const &string)
 
 void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
 {
-
-    //auto moduleData = std::shared_ptr<noise::module::Perlin>();
+    auto identifierData = std::dynamic_pointer_cast<IdentifierData>(data);
     auto terrainData = std::dynamic_pointer_cast<TerrainData>(data);
+    auto resolutionData = std::dynamic_pointer_cast<ResolutionData>(data);
 
-    //connect(moduleData, &LnPerlinModel::noiseChanged,this, &LnHeightMapBuilder::updateTerrain);
+    if (identifierData)
+    {
+        //std::cout<<"identifier "<< identifierData->identifier().toUtf8().constData()<<"\n";
+        _idText = identifierData->identifier();
+        _idSet = 1;
+    }
 
-    //std::cout<<data->type()<<'\n';
+    if (resolutionData)
+    {
+      _resSet = resolutionData->number();
+      std::cout<<"resSet "<< _resSet<<"\n";
 
-  if (terrainData)
-  {
-    //connect(terrainData, &LnPerlinModel::noiseChanged,this, &LnHeightMapBuilder::updateTerrain);
+      //ADD SOMETHING TO SET ACTUAL RESOLUTION VALUES
+    }
 
-    //myModule->SetFrequency(freqData->number());
-    //sets number input as label
-    //_label->setText(freqData->numberAsText());
-    //std::cout<<"Terrain Data Present "<< myModule->GetFrequency()<<"\n";
-  }
+    if (terrainData)
+    {
+        if (_idSet == 0)
+        {
+            std::cout<<"ID NOT SET \n";
+        }
 
+        if (_idSet == 1)
+        {
+            if ((QString::compare(_idText, "perlin")) == 0) // should return 0 if true
+            {
+                std::cout<<"PERLIN CONFIRMED \n";
+                std::cout<<"FreqPerlinOut "<< terrainData->myPerlinModule().GetFrequency()<<"\n";
 
+                //virtual void in Build() needs this
+                noise::module::Perlin perlinBuilder = terrainData->myPerlinModule();
 
-  //_label->adjustSize();
+                utils::NoiseMap heightMap;
+
+                _heightMapBuilder.SetSourceModule (perlinBuilder);
+                _heightMapBuilder.SetDestNoiseMap (heightMap);
+                _heightMapBuilder.SetDestSize (256, 256);
+                _heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);
+                _heightMapBuilder.Build ();
+
+                std::cout<<"built \n";
+
+                emit dataUpdated(0);
+
+            }
+
+            if ((QString::compare(_idText, "ridge")) == 0)
+            {
+                std::cout<<"RIDGE CONFIRMED \n";
+                std::cout<<"FreqRidgeOut "<< terrainData->myRidgeModule().GetFrequency()<<"\n";
+
+                //virtual void in Build() needs this
+                noise::module::Billow billowBuilder = terrainData->myBillowModule();
+
+                utils::NoiseMap heightMap;
+
+                _heightMapBuilder.SetSourceModule (billowBuilder);
+                _heightMapBuilder.SetDestNoiseMap (heightMap);
+                _heightMapBuilder.SetDestSize (256, 256);
+                _heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);
+                _heightMapBuilder.Build ();
+
+                std::cout<<"built \n";
+
+                emit dataUpdated(0);
+            }
+
+            if ((QString::compare(_idText, "billow")) == 0)
+            {
+                std::cout<<"BILLOW CONFIRMED \n";
+                std::cout<<"FreqBillowOut "<< terrainData->myBillowModule().GetFrequency()<<"\n";
+
+                //virtual void in Build() needs this
+                noise::module::RidgedMulti ridgeBuilder = terrainData->myRidgeModule();
+
+                utils::NoiseMap heightMap;
+
+                _heightMapBuilder.SetSourceModule (ridgeBuilder);
+                _heightMapBuilder.SetDestNoiseMap (heightMap);
+                _heightMapBuilder.SetDestSize (256, 256);
+                _heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);
+                _heightMapBuilder.Build ();
+
+                std::cout<<"built \n";
+
+                emit dataUpdated(0);
+            }
+        }
+    }
 }
-
-//void LnHeightMapBuilder::updateTerrain(std::shared_ptr<noise::module::Perlin> _myModule)
-//{
-//    std::cout<<"FreqOut "<< _myModule->GetFrequency()<<"\n";
-//}
 
 
 std::shared_ptr<NodeData>LnHeightMapBuilder::outData(PortIndex)
 {
-    //return NULL;
-    return std::make_shared<TerrainData>();
+    return std::make_shared<HeightMapData>(_heightMapBuilder);
 }
