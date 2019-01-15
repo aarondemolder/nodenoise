@@ -132,4 +132,6 @@ private:
 
   int _resSet = 0;
 
+  int _resSize = 256;
+
 };

@@ -17,7 +17,7 @@ ResolutionSourceDataModel::ResolutionSourceDataModel(): _comboBox(new QComboBox(
 
   connect(_comboBox, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), this, &ResolutionSourceDataModel::onComboEdited );
 
-  _comboBox->setCurrentIndex(1);
+  _comboBox->setCurrentIndex(0);
 
 }
 

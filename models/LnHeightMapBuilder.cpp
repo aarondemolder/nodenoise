@@ -98,7 +98,30 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
       _resSet = resolutionData->number();
       std::cout<<"resSet "<< _resSet<<"\n";
 
-      //ADD SOMETHING TO SET ACTUAL RESOLUTION VALUES
+      if (_resSet == 0)
+      {
+          _resSize = 256;
+      }
+
+      if (_resSet == 1)
+      {
+          _resSize = 512;
+      }
+
+      if (_resSet == 2)
+      {
+          _resSize = 1024;
+      }
+
+      if (_resSet == 3)
+      {
+          _resSize = 2048;
+      }
+
+      if (_resSet == 4)
+      {
+          _resSize = 4096;
+      }
     }
 
     if (terrainData)
@@ -122,7 +145,7 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
 
                 _heightMapBuilder.SetSourceModule (perlinBuilder);
                 _heightMapBuilder.SetDestNoiseMap (heightMap);
-                _heightMapBuilder.SetDestSize (256, 256);
+                _heightMapBuilder.SetDestSize (_resSize, _resSize);
                 _heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);
                 _heightMapBuilder.Build ();
 
