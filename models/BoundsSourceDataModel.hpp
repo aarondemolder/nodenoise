@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QtCore/QObject>
-#include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QTableWidget>
 
 #include <nodes/NodeDataModel>
 
@@ -36,11 +36,11 @@ public:
 
   QString name() const override { return QStringLiteral("Bounds Source"); }
 
-public:
+//public:
 
-  QJsonObject save() const override;
+//  QJsonObject save() const override;
 
-  void restore(QJsonObject const &p) override;
+//  void restore(QJsonObject const &p) override;
 
 public:
 
@@ -52,15 +52,15 @@ public:
 
   void setInData(std::shared_ptr<NodeData>, int) override{ }
 
-  QWidget *embeddedWidget() override { return _spinBox; }
+  QWidget *embeddedWidget() override { return _boundsBox; }
 
-private slots:
+//private slots:
 
-  void onSpinEdited();
+//  void onSpinEdited();
 
 private:
 
   std::shared_ptr<BoundsData> _number;
 
-  QDoubleSpinBox * _spinBox;
+  QTableWidget * _boundsBox;
 };
