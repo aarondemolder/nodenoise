@@ -9,6 +9,7 @@
 #include "TerrainData.hpp"
 #include "HeightMapData.hpp"
 #include "ResolutionData.hpp"
+#include "BoundsData.hpp"
 
 #include "DecimalData.hpp"
 
@@ -87,6 +88,8 @@ public:
             return TerrainData().type();
         case 2:
             return ResolutionData().type();
+        case 3:
+            return BoundsData().type();
         }
         break;
 

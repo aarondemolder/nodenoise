@@ -2,6 +2,7 @@
 
 #include <nodes/NodeDataModel>
 
+
 using QtNodes::NodeDataType;
 using QtNodes::NodeData;
 
@@ -11,17 +12,37 @@ class BoundsData : public NodeData
 {
 public:
 
-  BoundsData() : _number(0.0){}
+  BoundsData() : _numberXL(0.0), _numberXU(0.0), _numberZL(0.0), _numberZU(0.0) {}
 
-  BoundsData(double const number) : _number(number){}
+  BoundsData(double const numberXL, double const numberXU, double const numberZL, double const numberZU) : _numberXL(numberXL), _numberXU(numberXU), _numberZL(numberZL), _numberZU(numberZU){}
 
-  NodeDataType type() const override {return NodeDataType {"freq","Frequency"};}
 
-  double number() const { return _number; }
+  NodeDataType type() const override {return NodeDataType {"bounds","Bounds"};}
 
-  QString numberAsText() const { return QString::number(_number, 'f'); }
+
+  double numberXL() const { return _numberXL; }
+
+  double numberXU() const { return _numberXU; }
+
+
+  double numberZL() const { return _numberZL; }
+
+  double numberZU() const { return _numberZU; }
+
+
 
 private:
 
-  double _number;
+  double _numberXL;
+
+  double _numberXU;
+
+
+  double _numberZL;
+
+  double _numberZU;
+
+
+
+
 };

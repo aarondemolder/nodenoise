@@ -22,6 +22,9 @@ LnHeightMapBuilder::LnHeightMapBuilder() : _label(new QLabel("LnHeightMapBuilder
     _label->setFixedSize(200, 200);
     _label->installEventFilter(this);
 
+    //in case no bounds are set
+    _heightMapBuilder.SetBounds(6.0,10.0,1.0,5.0);
+
 }
 
 
@@ -32,7 +35,7 @@ unsigned int LnHeightMapBuilder::nPorts(PortType portType) const
   switch (portType)
   {
     case PortType::In:
-      result = 3;
+      result = 4;
       break;
 
     case PortType::Out:
@@ -79,12 +82,17 @@ void LnHeightMapBuilder::onTextEdited(QString const &string)
 
 
 
-
 void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
 {
     auto identifierData = std::dynamic_pointer_cast<IdentifierData>(data);
     auto terrainData = std::dynamic_pointer_cast<TerrainData>(data);
     auto resolutionData = std::dynamic_pointer_cast<ResolutionData>(data);
+    auto boundsData = std::dynamic_pointer_cast<BoundsData>(data);
+
+    if (boundsData)
+    {
+        _heightMapBuilder.SetBounds(boundsData->numberXL(),boundsData->numberXU(),boundsData->numberZL(),boundsData->numberZU());
+    }
 
     if (identifierData)
     {
@@ -146,7 +154,7 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
                 _heightMapBuilder.SetSourceModule (perlinBuilder);
                 _heightMapBuilder.SetDestNoiseMap (heightMap);
                 _heightMapBuilder.SetDestSize (_resSize, _resSize);
-                _heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);
+                //_heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);
                 _heightMapBuilder.Build ();
 
                 std::cout<<"built \n";
@@ -167,8 +175,8 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
 
                 _heightMapBuilder.SetSourceModule (billowBuilder);
                 _heightMapBuilder.SetDestNoiseMap (heightMap);
-                _heightMapBuilder.SetDestSize (256, 256);
-                _heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);
+                _heightMapBuilder.SetDestSize (_resSize, _resSize);
+                //_heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);
                 _heightMapBuilder.Build ();
 
                 std::cout<<"built \n";
@@ -188,8 +196,8 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
 
                 _heightMapBuilder.SetSourceModule (ridgeBuilder);
                 _heightMapBuilder.SetDestNoiseMap (heightMap);
-                _heightMapBuilder.SetDestSize (256, 256);
-                _heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);
+                _heightMapBuilder.SetDestSize (_resSize, _resSize);
+                //_heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);
                 _heightMapBuilder.Build ();
 
                 std::cout<<"built \n";

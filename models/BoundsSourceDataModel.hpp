@@ -2,6 +2,8 @@
 
 #include <QtCore/QObject>
 #include <QtWidgets/QTableWidget>
+#include <QGroupBox>
+#include <QDoubleSpinBox>
 
 #include <nodes/NodeDataModel>
 
@@ -36,11 +38,11 @@ public:
 
   QString name() const override { return QStringLiteral("Bounds Source"); }
 
-//public:
+public:
 
-//  QJsonObject save() const override;
+  QJsonObject save() const override;
 
-//  void restore(QJsonObject const &p) override;
+  void restore(QJsonObject const &p) override;
 
 public:
 
@@ -52,15 +54,27 @@ public:
 
   void setInData(std::shared_ptr<NodeData>, int) override{ }
 
-  QWidget *embeddedWidget() override { return _boundsBox; }
+  QWidget *embeddedWidget() override { return _boundsGroup; }
 
-//private slots:
+private slots:
 
-//  void onSpinEdited();
+  void onGroupEdited();
 
 private:
 
-  std::shared_ptr<BoundsData> _number;
+  std::shared_ptr<BoundsData> _bounds;
 
-  QTableWidget * _boundsBox;
+  QGroupBox *_boundsGroup;
+
+
+  QDoubleSpinBox *_lowerXBound;
+
+  QDoubleSpinBox *_upperXBound;
+
+
+  QDoubleSpinBox *_lowerZBound;
+
+  QDoubleSpinBox *_upperZBound;
+
+
 };
