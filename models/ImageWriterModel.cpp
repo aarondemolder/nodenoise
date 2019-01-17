@@ -14,7 +14,7 @@
 #include <QImageWriter>
 #include <QFileDialog>
 
-ImageWriterModel::ImageWriterModel() : _label(new QLabel("Image will appear here, click to write out."))
+ImageWriterModel::ImageWriterModel() : _label(new QLabel("Image Preview"))
 {
   _label->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
 

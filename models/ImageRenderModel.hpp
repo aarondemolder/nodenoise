@@ -39,25 +39,25 @@ using QtNodes::NodeDataType;
 
 /// The model dictates the number of inputs and outputs for the Node.
 /// In this example it has no logic.
-class LnHeightMapBuilder : public NodeDataModel
+class ImageRenderModel : public NodeDataModel
 {
   Q_OBJECT
 
 public:
-  LnHeightMapBuilder();
+  ImageRenderModel();
 
   virtual
-  ~LnHeightMapBuilder() {}
+  ~ImageRenderModel() {}
 
 public:
 
-  QString caption() const override { return QString("HeightMap Builder"); }
+  QString caption() const override { return QString("Image Renderer"); }
 
   bool captionVisible() const override { return true; }
 
-  static QString Name() { return QString("HeightMap Builder"); }
+  static QString Name() { return QString("Image Renderer"); }
 
-  QString name() const override { return LnHeightMapBuilder::Name(); }
+  QString name() const override { return ImageRenderModel::Name(); }
 
 public:
 
@@ -81,13 +81,7 @@ public:
         switch (portIndex)
         {
         case 0:
-            return IdentifierData().type();
-        case 1:
-            return TerrainData().type();
-        case 2:
-            return ResolutionData().type();
-        case 3:
-            return BoundsData().type();
+            return HeightMapData().type();
         }
         break;
 
@@ -95,7 +89,7 @@ public:
       switch (portIndex)
       {
         case 0:
-          return HeightMapData().type();
+          return PixmapData().type();
       }
       break;
 
@@ -110,9 +104,6 @@ protected:
 
   bool eventFilter(QObject *object, QEvent *event) override;
 
-//public slots:
-
-//  void updateTerrain(std::shared_ptr<noise::module::Perlin>);
 
 
 private slots:
@@ -125,18 +116,13 @@ private:
 
   QLabel * _label;
 
-  QString _idText;
-
-  int _idSet = 0;
+  QPixmap _pixmap;
 
   utils::NoiseMapBuilderPlane _heightMapBuilder;
 
   utils::NoiseMap _heightMap;
 
-  int _resSet = 0;
-
-  int _resSize = 256;
-
   int _resolution = 256;
+
 
 };

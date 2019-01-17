@@ -22,7 +22,7 @@ LnHeightMapBuilder::LnHeightMapBuilder() : _label(new QLabel("LnHeightMapBuilder
     _label->setFixedSize(200, 200);
     _label->installEventFilter(this);
 
-    //in case no bounds are set
+    //prevents crash in case no bounds are set
     _heightMapBuilder.SetBounds(6.0,10.0,1.0,5.0);
 
 }
@@ -96,7 +96,6 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
 
     if (identifierData)
     {
-        //std::cout<<"identifier "<< identifierData->identifier().toUtf8().constData()<<"\n";
         _idText = identifierData->identifier();
         _idSet = 1;
     }
@@ -109,26 +108,31 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
       if (_resSet == 0)
       {
           _resSize = 256;
+          _resolution = _resSize;
       }
 
       if (_resSet == 1)
       {
           _resSize = 512;
+          _resolution = _resSize;
       }
 
       if (_resSet == 2)
       {
           _resSize = 1024;
+          _resolution = _resSize;
       }
 
       if (_resSet == 3)
       {
           _resSize = 2048;
+          _resolution = _resSize;
       }
 
       if (_resSet == 4)
       {
           _resSize = 4096;
+          _resolution = _resSize;
       }
     }
 
@@ -143,61 +147,36 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
         {
             if ((QString::compare(_idText, "perlin")) == 0) // should return 0 if true
             {
-                std::cout<<"PERLIN CONFIRMED \n";
-                std::cout<<"FreqPerlinOut "<< terrainData->myPerlinModule().GetFrequency()<<"\n";
-
                 //virtual void in Build() needs this
                 noise::module::Perlin perlinBuilder = terrainData->myPerlinModule();
 
-                utils::NoiseMap heightMap;
-
                 _heightMapBuilder.SetSourceModule (perlinBuilder);
-                _heightMapBuilder.SetDestNoiseMap (heightMap);
+                _heightMapBuilder.SetDestNoiseMap (_heightMap);
                 _heightMapBuilder.SetDestSize (_resSize, _resSize);
-                //_heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);
                 _heightMapBuilder.Build ();
-
-                std::cout<<"built \n";
-
-                emit dataUpdated(0);
-
-            }
-
-            if ((QString::compare(_idText, "ridge")) == 0)
-            {
-                std::cout<<"RIDGE CONFIRMED \n";
-                std::cout<<"FreqRidgeOut "<< terrainData->myRidgeModule().GetFrequency()<<"\n";
-
-                //virtual void in Build() needs this
-                noise::module::Billow billowBuilder = terrainData->myBillowModule();
-
-                utils::NoiseMap heightMap;
-
-                _heightMapBuilder.SetSourceModule (billowBuilder);
-                _heightMapBuilder.SetDestNoiseMap (heightMap);
-                _heightMapBuilder.SetDestSize (_resSize, _resSize);
-                //_heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);
-                _heightMapBuilder.Build ();
-
-                std::cout<<"built \n";
 
                 emit dataUpdated(0);
             }
 
             if ((QString::compare(_idText, "billow")) == 0)
             {
-                std::cout<<"BILLOW CONFIRMED \n";
-                std::cout<<"FreqBillowOut "<< terrainData->myBillowModule().GetFrequency()<<"\n";
+                noise::module::Billow billowBuilder = terrainData->myBillowModule();
 
-                //virtual void in Build() needs this
+                _heightMapBuilder.SetSourceModule (billowBuilder);
+                _heightMapBuilder.SetDestNoiseMap (_heightMap);
+                _heightMapBuilder.SetDestSize (_resSize, _resSize);
+                _heightMapBuilder.Build ();
+
+                emit dataUpdated(0);
+            }
+
+            if ((QString::compare(_idText, "ridge")) == 0)
+            {
                 noise::module::RidgedMulti ridgeBuilder = terrainData->myRidgeModule();
 
-                utils::NoiseMap heightMap;
-
                 _heightMapBuilder.SetSourceModule (ridgeBuilder);
-                _heightMapBuilder.SetDestNoiseMap (heightMap);
+                _heightMapBuilder.SetDestNoiseMap (_heightMap);
                 _heightMapBuilder.SetDestSize (_resSize, _resSize);
-                //_heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);
                 _heightMapBuilder.Build ();
 
                 std::cout<<"built \n";
@@ -211,5 +190,5 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
 
 std::shared_ptr<NodeData>LnHeightMapBuilder::outData(PortIndex)
 {
-    return std::make_shared<HeightMapData>(_heightMapBuilder);
+    return std::make_shared<HeightMapData>(_heightMapBuilder,_heightMap,_resolution);
 }

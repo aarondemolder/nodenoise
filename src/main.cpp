@@ -10,6 +10,7 @@
 
 #include <nodes/DataModelRegistry>
 
+//Misc viewers
 #include "models/TextSourceDataModel.hpp"
 #include "models/NumberSourceDataModel.hpp"
 #include "models/ImageShowModel.hpp"
@@ -17,6 +18,7 @@
 #include "models/ImageWriterModel.hpp"
 #include "models/View3DModel.hpp"
 
+//Generators
 #include "models/LnPerlinModel.hpp"
 #include "models/LnBillowModel.hpp"
 #include "models/LnRidgedMultiModel.hpp"
@@ -27,9 +29,11 @@
 #include "models/SeedSourceDataModel.hpp"
 #include "models/QualitySourceDataModel.hpp"
 
+//Heightmap Gen & Rendering
 #include "models/LnHeightMapBuilder.hpp"
 #include "models/ResolutionSourceDataModel.hpp"
 #include "models/BoundsSourceDataModel.hpp"
+#include "models/ImageRenderModel.hpp"
 
 #include"models/MultiInputModel.hpp"
 
@@ -62,6 +66,7 @@ static std::shared_ptr<DataModelRegistry>registerDataModels()
   ret->registerModel<ImageShowModel>("Image");
   ret->registerModel<ImageLoaderModel>("Image");
   ret->registerModel<ImageWriterModel>("Image");
+  ret->registerModel<ImageRenderModel>("libNoise");
 
 
   //libnoise nodes

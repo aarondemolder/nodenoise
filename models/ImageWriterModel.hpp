@@ -29,7 +29,7 @@ public:
 
 public:
 
-  QString caption() const override { return QString("Image Writer"); }
+  QString caption() const override { return QString("Click to Save"); }
 
   QString name() const override { return QString("Image Writer"); }
 
@@ -46,8 +46,6 @@ public:
   void setInData(std::shared_ptr<NodeData> nodeData, PortIndex port) override;
 
   QWidget *embeddedWidget() override { return _label; }
-
-  //bool resizable() const override { return true; }
 
 protected:
 
