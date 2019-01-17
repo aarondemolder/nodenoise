@@ -5,20 +5,12 @@
 #include <QtWidgets/QLabel>
 //#include <QtWidgets/QTextEdit>
 
-#include "IdentifierData.hpp"
-#include "TerrainData.hpp"
 #include "HeightMapData.hpp"
 #include "ResolutionData.hpp"
 #include "BoundsData.hpp"
-
-#include "DecimalData.hpp"
-
-#include "FreqData.hpp"
-#include "LacData.hpp"
-#include "OctaveData.hpp"
-#include "PerData.hpp"
-#include "SeedData.hpp"
-#include "QualityData.hpp"
+#include "LightBrightnessData.hpp"
+#include "LightContrastData.hpp"
+#include "AutoGradientData.hpp"
 
 #include "PixmapData.hpp"
 
@@ -82,6 +74,12 @@ public:
         {
         case 0:
             return HeightMapData().type();
+        case 1:
+            return LightBrightnessData().type();
+        case 2:
+            return LightContrastData().type();
+        case 3:
+            return AutoGradientData().type();
         }
         break;
 
@@ -123,6 +121,10 @@ private:
   utils::NoiseMap _heightMap;
 
   int _resolution = 256;
+
+  utils::RendererImage renderer;
+
+  utils::Image image;
 
 
 };

@@ -34,6 +34,9 @@
 #include "models/ResolutionSourceDataModel.hpp"
 #include "models/BoundsSourceDataModel.hpp"
 #include "models/ImageRenderModel.hpp"
+#include "models/LnLightBrightnessModel.hpp"
+#include "models/LnLightContrastModel.hpp"
+#include "models/LnAutoGradientModel.hpp"
 
 #include"models/MultiInputModel.hpp"
 
@@ -77,6 +80,10 @@ static std::shared_ptr<DataModelRegistry>registerDataModels()
   ret->registerModel<LnHeightMapBuilder>("libNoise");
   ret->registerModel<ResolutionSourceDataModel>("libNoise");
   ret->registerModel<BoundsSourceDataModel>("libNoise");
+
+  ret->registerModel<LnLightBrightnessModel>("libNoise");
+  ret->registerModel<LnLightContrastModel>("libNoise");
+  ret->registerModel<LnAutoGradientModel>("libNoise");
 
   //ret->registerModel<NaiveDataModel>();
 

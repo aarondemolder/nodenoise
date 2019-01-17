@@ -69,8 +69,6 @@ public:
 
   QWidget *embeddedWidget() override { return _label; }
 
-  bool resizable() const override { return true; }
-
 public:
 
   NodeDataType dataType(PortType portType, PortIndex portIndex) const override
@@ -110,15 +108,10 @@ protected:
 
   bool eventFilter(QObject *object, QEvent *event) override;
 
-//public slots:
-
-//  void updateTerrain(std::shared_ptr<noise::module::Perlin>);
-
 
 private slots:
 
   void onTextEdited(QString const &string);
-
 
 
 private:

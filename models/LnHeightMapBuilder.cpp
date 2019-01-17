@@ -14,13 +14,13 @@
 LnHeightMapBuilder::LnHeightMapBuilder() : _label(new QLabel("LnHeightMapBuilder"))
 {
 
-    _label->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
-    QFont f = _label->font();
-    f.setBold(true);
-    f.setItalic(true);
-    _label->setFont(f);
-    _label->setFixedSize(200, 200);
-    _label->installEventFilter(this);
+//    _label->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
+//    QFont f = _label->font();
+//    f.setBold(true);
+//    f.setItalic(true);
+//    _label->setFont(f);
+//    _label->setFixedSize(200, 200);
+//    _label->installEventFilter(this);
 
     //prevents crash in case no bounds are set
     _heightMapBuilder.SetBounds(6.0,10.0,1.0,5.0);
@@ -179,12 +179,16 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
                 _heightMapBuilder.SetDestSize (_resSize, _resSize);
                 _heightMapBuilder.Build ();
 
-                std::cout<<"built \n";
-
                 emit dataUpdated(0);
             }
         }
     }
+
+//    _heightMapBuilder.SetDestNoiseMap (_heightMap);
+//    _heightMapBuilder.SetDestSize (_resSize, _resSize);
+//    _heightMapBuilder.Build ();
+
+//    emit dataUpdated(0);
 }
 
 

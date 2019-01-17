@@ -29,6 +29,9 @@ HEADERS+= $$PWD/include/TextData.hpp \
                 $$PWD/include/LacData.hpp \
                 $$PWD/include/PerData.hpp \
                 $$PWD/include/OctaveData.hpp \
+                $$PWD/include/LightContrastData.hpp \
+                $$PWD/include/LightBrightnessData.hpp \
+                $$PWD/include/AutoGradientData.hpp \
                 $$PWD/nodes/*.hpp \
                 $$PWD/models/*.hpp \
                 $$PWD/include/glwidget.h \
