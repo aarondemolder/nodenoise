@@ -7,10 +7,11 @@
 
 #include "noise/noise.h"
 
-ColourSourceDataModel::ColourSourceDataModel(): _label(new QLabel("Colour Selector"))
+ColourSourceDataModel::ColourSourceDataModel(): _label(new QLabel("Click to select"))
 {
 
     _label->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
+    _label->setAutoFillBackground(true);
     QFont f = _label->font();
     f.setBold(true);
     f.setItalic(true);
@@ -18,43 +19,41 @@ ColourSourceDataModel::ColourSourceDataModel(): _label(new QLabel("Colour Select
     _label->setFixedSize(200, 200);
     _label->installEventFilter(this);
 
-
-//  _spinBox->setRange(0.01,10000);
-//  _spinBox->setSingleStep(1);
-//  connect(_spinBox, QOverload<const QString &>::of(&QDoubleSpinBox::valueChanged), this, &ColourSourceDataModel::onSpinEdited );
-
-//  _spinBox->setValue(noise::module::DEFAULT_PERLIN_FREQUENCY);
-
 }
 
 
-//QJsonObject ColourSourceDataModel::save() const
-//{
-//  QJsonObject modelJson = NodeDataModel::save();
+QJsonObject ColourSourceDataModel::save() const
+{
+  QJsonObject modelJson = NodeDataModel::save();
 
-//  if (_colour) modelJson["number"] = QColor::getRgbF(_colour->colour());
+  //Should probably fix colour saving
+  //if (_colour) modelJson["colour"] = QColor::name(_colour);
 
-//  return modelJson;
-//}
+  return modelJson;
+}
 
 
-//void ColourSourceDataModel::restore(QJsonObject const &p)
-//{
-//  QJsonValue v = p["number"];
+void ColourSourceDataModel::restore(QJsonObject const &p)
+{
+  QJsonValue v = p["colour"];
 
-//  if (!v.isUndefined())
-//  {
-//    QString strNum = v.toString();
+  if (!v.isUndefined())
+  {
+    QString strNum = v.toString();
 
-//    bool   ok;
-//    double d = strNum.toDouble(&ok);
-//    if (ok)
-//    {
-//      _colour = std::make_shared<ColourData>(d);
-//      _spinBox->setValue(d);
-//    }
-//  }
-//}
+    bool   ok;
+    double d = strNum.toDouble(&ok);
+    if (ok)
+    {
+      _colour = std::make_shared<ColourData>(d);
+
+      QPalette palette = _label->palette();
+      palette.setColor(_label->backgroundRole(), _colour->colour());
+      palette.setColor(_label->foregroundRole(), Qt::transparent);
+      _label->setPalette(palette);
+    }
+  }
+}
 
 
 unsigned int ColourSourceDataModel::nPorts(PortType portType) const
@@ -87,21 +86,25 @@ bool ColourSourceDataModel::eventFilter(QObject *object, QEvent *event)
       if (event->type() == QEvent::MouseButtonPress)
       {
 
-          //open colour dialog
+          QColor selection = QColorDialog::getColor();
+          if( selection.isValid() )
+          {
+
+              QPalette palette = _label->palette();
+              palette.setColor(_label->backgroundRole(), selection);
+              palette.setColor(_label->foregroundRole(), Qt::transparent);
+              _label->setPalette(palette);
+
+              _colour = std::make_shared<ColourData>(selection);
+
+              emit dataUpdated(0);
+          }
+
         return true;
       }
     }
 
   return false;
-}
-
-
-void ColourSourceDataModel::onSpinEdited()
-{
-  double colour = _spinBox->value();
-  _colour = std::make_shared<ColourData>(colour);
-
-  emit dataUpdated(0);
 }
 
 

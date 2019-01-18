@@ -56,8 +56,6 @@ bool ImageWriterModel::eventFilter(QObject *object, QEvent *event)
 
     if (object == _label)
     {
-      int w = _label->width();
-      int h = _label->height();
 
       if (event->type() == QEvent::MouseButtonPress)
       {
@@ -66,12 +64,12 @@ bool ImageWriterModel::eventFilter(QObject *object, QEvent *event)
         if (d)
         {
 
-            QString fileName = QFileDialog::getSaveFileName(nullptr,tr("Save Image"),QDir::homePath()+"/untitled.png",tr("Image File (*.png)"));
+            QString fileName = QFileDialog::getSaveFileName(nullptr,tr("Save Image"),QDir::homePath()+"/untitled.bmp",tr("Image File (*.bmp)"));
 
-            QImage newImg (256, 256, QImage::Format_RGB32);
+            QImage newImg;
             newImg = d->pixmap().toImage();
 
-            QImageWriter writerQ(fileName, "png");
+            QImageWriter writerQ(fileName, "bmp");
             writerQ.write(newImg);
 
             std::cout<<"QimageWritten\n";

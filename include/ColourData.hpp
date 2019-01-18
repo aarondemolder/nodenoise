@@ -11,7 +11,7 @@ class ColourData : public NodeData
 {
 public:
 
-  ColourData() : _colour(255.0,255.0,255.0,255.0){}
+  ColourData() : _colour(255,255,255,255){}
 
   ColourData(QColor const colour) : _colour(colour){}
 

@@ -1,9 +1,7 @@
 #pragma once
 
 #include <QtCore/QObject>
-//#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QLabel>
-//#include <QtWidgets/QTextEdit>
 
 #include "HeightMapData.hpp"
 #include "ResolutionData.hpp"
@@ -11,6 +9,7 @@
 #include "LightBrightnessData.hpp"
 #include "LightContrastData.hpp"
 #include "AutoGradientData.hpp"
+#include "ColourData.hpp"
 
 #include "PixmapData.hpp"
 
@@ -79,6 +78,8 @@ public:
         case 2:
             return LightContrastData().type();
         case 3:
+            return ColourData().type();
+        case 4:
             return AutoGradientData().type();
         }
         break;
@@ -115,6 +116,8 @@ private:
   QLabel * _label;
 
   QPixmap _pixmap;
+
+  QColor _colour;
 
   utils::NoiseMapBuilderPlane _heightMapBuilder;
 

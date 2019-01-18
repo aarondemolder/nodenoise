@@ -37,6 +37,7 @@
 #include "models/LnLightBrightnessModel.hpp"
 #include "models/LnLightContrastModel.hpp"
 #include "models/LnAutoGradientModel.hpp"
+#include "models/ColourSourceDataModel.hpp"
 
 #include"models/MultiInputModel.hpp"
 
@@ -84,6 +85,7 @@ static std::shared_ptr<DataModelRegistry>registerDataModels()
   ret->registerModel<LnLightBrightnessModel>("libNoise");
   ret->registerModel<LnLightContrastModel>("libNoise");
   ret->registerModel<LnAutoGradientModel>("libNoise");
+  ret->registerModel<ColourSourceDataModel>("libNoise");
 
   //ret->registerModel<NaiveDataModel>();
 

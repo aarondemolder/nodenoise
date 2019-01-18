@@ -22,7 +22,6 @@ ImageRenderModel::ImageRenderModel() : _label(new QLabel("ImageRender Model"))
     _label->setFixedSize(200, 200);
     _label->installEventFilter(this);
 
-
 }
 
 
@@ -33,7 +32,7 @@ unsigned int ImageRenderModel::nPorts(PortType portType) const
   switch (portType)
   {
     case PortType::In:
-      result = 4;
+      result = 5;
       break;
 
     case PortType::Out:
@@ -82,6 +81,16 @@ void ImageRenderModel::setInData(std::shared_ptr<NodeData> data, int)
     auto lightbrightnessData = std::dynamic_pointer_cast<LightBrightnessData>(data);
     auto lightcontrastData = std::dynamic_pointer_cast<LightContrastData>(data);
     auto autogradientData = std::dynamic_pointer_cast<AutoGradientData>(data);
+    auto colourData = std::dynamic_pointer_cast<ColourData>(data);
+
+    if(colourData)
+    {
+        _colour = colourData->colour();
+        noise::utils::Color lnColour = utils::Color (  _colour.red(), _colour.green(), _colour.blue(), _colour.alpha());
+
+        renderer.EnableLight();
+        renderer.SetLightColor(lnColour);
+    }
 
     if (lightbrightnessData)
     {

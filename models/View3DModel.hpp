@@ -7,6 +7,9 @@
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 
+#include <QGroupBox>
+
+
 #include <nodes/DataModelRegistry>
 #include <nodes/NodeDataModel>
 

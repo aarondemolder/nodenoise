@@ -3,6 +3,7 @@
 #include <QtCore/QObject>
 #include <QtWidgets/QLabel>
 #include <QColor>
+#include <QColorDialog>
 #include <QEvent>
 
 #include <nodes/NodeDataModel>
@@ -38,11 +39,11 @@ public:
 
   QString name() const override { return QStringLiteral("Colour Source"); }
 
-//public:
+public:
 
-//  QJsonObject save() const override;
+  QJsonObject save() const override;
 
-//  void restore(QJsonObject const &p) override;
+  void restore(QJsonObject const &p) override;
 
 public:
 
@@ -59,10 +60,6 @@ public:
 protected:
 
   bool eventFilter(QObject *object, QEvent *event) override;
-
-private slots:
-
-  void onSpinEdited();
 
 private:
 
