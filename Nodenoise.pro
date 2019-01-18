@@ -32,6 +32,7 @@ HEADERS+= $$PWD/include/TextData.hpp \
                 $$PWD/include/LightContrastData.hpp \
                 $$PWD/include/LightBrightnessData.hpp \
                 $$PWD/include/AutoGradientData.hpp \
+                $$PWD/include/ColourData.hpp \
                 $$PWD/nodes/*.hpp \
                 $$PWD/models/*.hpp \
                 $$PWD/include/glwidget.h \
