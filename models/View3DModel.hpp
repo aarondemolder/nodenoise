@@ -73,6 +73,8 @@ private:
 
   std::shared_ptr<NodeData> _nodeData;
 
+  //QWidget * _openDisplay;
+
 
 };
 

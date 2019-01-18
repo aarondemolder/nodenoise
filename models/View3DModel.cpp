@@ -24,6 +24,9 @@ View3DModel::View3DModel(): _view3d(new GLWidget())
     //displays another openglwindow seperate
     _view3d->show();
 
+    //_view3d->setParent();
+
+
 }
 
 

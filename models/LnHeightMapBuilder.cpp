@@ -181,6 +181,18 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
 
                 emit dataUpdated(0);
             }
+
+            if ((QString::compare(_idText, "scale")) == 0)
+            {
+                noise::module::ScaleBias scaleBuilder = terrainData->myScaleModule();
+
+                _heightMapBuilder.SetSourceModule (scaleBuilder);
+                _heightMapBuilder.SetDestNoiseMap (_heightMap);
+                _heightMapBuilder.SetDestSize (_resSize, _resSize);
+                _heightMapBuilder.Build ();
+
+                emit dataUpdated(0);
+            }
         }
     }
 

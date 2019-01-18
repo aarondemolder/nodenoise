@@ -20,6 +20,8 @@ public:
 
   TerrainData(noise::module::Billow const &myBillowModule) : _myBillowModule(myBillowModule) {}
 
+  TerrainData(noise::module::ScaleBias const &myScaleModule) : _myScaleModule(myScaleModule) {}
+
   NodeDataType type() const override { return NodeDataType {"terrain", "Terrain"}; }
 
   noise::module::Perlin myPerlinModule() const {return _myPerlinModule;}
@@ -28,6 +30,8 @@ public:
 
   noise::module::Billow myBillowModule() const {return _myBillowModule;}
 
+  noise::module::ScaleBias myScaleModule() const {return _myScaleModule;}
+
 private:
 
   noise::module::Perlin _myPerlinModule;
@@ -35,6 +39,8 @@ private:
   noise::module::RidgedMulti _myRidgeModule;
 
   noise::module::Billow _myBillowModule;
+
+  noise::module::ScaleBias _myScaleModule;
 
 };
 
