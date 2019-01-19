@@ -25,6 +25,9 @@ LnScaleBiasModel::LnScaleBiasModel() : _label(new QLabel("Scale Bias"))
     //prevents crash in case no bounds are set
     //_heightMapBuilder.SetBounds(6.0,10.0,1.0,5.0);
 
+//    _myScaleModule.SetBias(0.0);
+//    _myScaleModule.SetScale(0.0);
+
 }
 
 
@@ -89,30 +92,33 @@ void LnScaleBiasModel::setInData(std::shared_ptr<NodeData> data, int)
     auto biasData = std::dynamic_pointer_cast<BiasData>(data);
     auto scaleData = std::dynamic_pointer_cast<ScaleData>(data);
 
+
     if (biasData)
     {
-        _myScaleModule.SetBias (biasData->bias());
-
+        _bias = biasData->bias();
     }
 
     if (scaleData)
     {
-        _myScaleModule.SetScale (scaleData->scale());
+        _scale = scaleData->scale();
     }
+
 
     if (terrainData)
     {
+
         noise::module::Perlin perlinScaleBuilder = terrainData->myPerlinModule();
 
         _myScaleModule.SetSourceModule(0, perlinScaleBuilder);
-//        _myScaleModule.SetScale (0.125);
-//        _myScaleModule.SetBias (-0.75);
+        _myScaleModule.SetScale (_scale);
+        _myScaleModule.SetBias (_bias);
 
         utils::NoiseMap heightMap;
         utils::NoiseMapBuilderPlane heightMapBuilder;
 
         heightMapBuilder.SetSourceModule (_myScaleModule);
         heightMapBuilder.SetDestNoiseMap (heightMap);
+
         heightMapBuilder.SetDestSize (256, 256);
         heightMapBuilder.SetBounds (6.0, 10.0, 1.0, 5.0);
         heightMapBuilder.Build ();
@@ -150,6 +156,7 @@ void LnScaleBiasModel::setInData(std::shared_ptr<NodeData> data, int)
         emit dataUpdated(1);
 
     }
+
 
 
 }

@@ -9,8 +9,8 @@
 
 BiasSourceDataModel::BiasSourceDataModel(): _spinBox(new QDoubleSpinBox())
 {
-  _spinBox->setRange(-100,100);
-  _spinBox->setSingleStep(1);
+  _spinBox->setRange(-10,10);
+  _spinBox->setSingleStep(0.1);
   connect(_spinBox, QOverload<const QString &>::of(&QDoubleSpinBox::valueChanged), this, &BiasSourceDataModel::onSpinEdited );
 
   _spinBox->setValue(0.0);

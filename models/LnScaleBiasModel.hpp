@@ -136,4 +136,8 @@ private:
 
   noise::module::ScaleBias _myScaleModule;
 
+  double _bias;
+
+  double _scale;
+
 };
