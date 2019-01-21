@@ -15,6 +15,7 @@
 BoundsSourceDataModel::BoundsSourceDataModel(): _boundsGroup(new QGroupBox(tr("Noise Bound Coords")))
 {
     _boundsGroup->setAlignment(4);
+    _boundsGroup->setTitle("X    -    Z");
 
     _lowerXBound = new QDoubleSpinBox();
     _upperXBound = new QDoubleSpinBox();
@@ -40,7 +41,16 @@ BoundsSourceDataModel::BoundsSourceDataModel(): _boundsGroup(new QGroupBox(tr("N
     vbox2->addWidget(_upperZBound);
     vbox2->addStretch(1);
 
+    QVBoxLayout *vbox3 = new QVBoxLayout;
+    QFrame *vLine = new QFrame();
+    vLine->setFrameShape(QFrame::VLine);
+    vLine->setFrameShadow(QFrame::Raised);
+
+    vbox3->addWidget(vLine);
+    //vbox3->addWidget(displayText);
+
     vboxTop->addLayout(vbox1);
+    vboxTop->addLayout(vbox3);
     vboxTop->addLayout(vbox2);
     vboxTop->addStretch(2);
     _boundsGroup->setLayout(vboxTop);

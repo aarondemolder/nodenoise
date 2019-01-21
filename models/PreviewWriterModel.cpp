@@ -14,7 +14,7 @@
 #include <QImageWriter>
 #include <QFileDialog>
 
-PreviewWriterModel::PreviewWriterModel() : _label(new QLabel("Save Preview"))
+PreviewWriterModel::PreviewWriterModel() : _label(new QLabel("Input Heightmap in Port 1 \n Diffuse in Port 2"))
 {
   _label->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
 
@@ -36,7 +36,7 @@ unsigned int PreviewWriterModel::nPorts(PortType portType) const
   switch (portType)
   {
     case PortType::In:
-      result = 1;
+      result = 2;
       break;
 
     case PortType::Out:
@@ -50,45 +50,6 @@ unsigned int PreviewWriterModel::nPorts(PortType portType) const
 }
 
 
-bool PreviewWriterModel::eventFilter(QObject *object, QEvent *event)
-{
-
-
-    if (object == _label)
-    {
-
-      if (event->type() == QEvent::MouseButtonPress)
-      {
-
-        auto d = std::dynamic_pointer_cast<PixmapData>(_nodeData);
-        if (d)
-        {
-
-            QString fileName = QFileDialog::getSaveFileName(nullptr,tr("Save Image"),QDir::homePath()+"/untitled.pre",tr("Preview File (*.pre)"));
-
-            QImage imgNew;
-            imgNew = d->pixmap().toImage();
-            QImage preview = imgNew.scaled(1024, 1024,Qt::KeepAspectRatio);
-
-            QImageWriter writerQ(fileName, "png");
-            writerQ.write(preview);
-
-            std::cout<<"QimageWritten\n";
-        }
-
-        return true;
-      }
-    }
-
-  return false;
-}
-
-
-NodeDataType PreviewWriterModel::dataType(PortType, PortIndex) const
-{
-  return PixmapData().type();
-}
-
 
 std::shared_ptr<NodeData>PreviewWriterModel::outData(PortIndex)
 {
@@ -96,22 +57,44 @@ std::shared_ptr<NodeData>PreviewWriterModel::outData(PortIndex)
 }
 
 
-void PreviewWriterModel::setInData(std::shared_ptr<NodeData> nodeData, PortIndex)
+void PreviewWriterModel::setInData(std::shared_ptr<NodeData> nodeData, PortIndex port)
 {
   _nodeData = nodeData;
 
   if (_nodeData)
   {
-    auto d = std::dynamic_pointer_cast<PixmapData>(_nodeData);
+      if (port == 0)
+      {
+          auto d = std::dynamic_pointer_cast<PixmapData>(_nodeData);
 
-    int w = _label->width();
-    int h = _label->height();
+          QString fileName = "previews/preview_height.pre";
 
-    _label->setPixmap(d->pixmap().scaled(w, h, Qt::KeepAspectRatio));
-  }
-  else
-  {
-    _label->setPixmap(QPixmap());
+          QImage imgNew;
+          imgNew = d->pixmap().toImage();
+          QImage preview = imgNew.scaled(1024, 1024,Qt::KeepAspectRatio);
+
+          QImageWriter writerQ(fileName, "png");
+          writerQ.write(preview);
+
+
+      }
+
+      if (port == 1)
+      {
+
+          auto d = std::dynamic_pointer_cast<PixmapData>(_nodeData);
+
+          QString fileName = "previews/preview_diffuse.pre";
+
+          QImage imgNew;
+          imgNew = d->pixmap().toImage();
+          QImage preview = imgNew.scaled(1024, 1024,Qt::KeepAspectRatio);
+
+          QImageWriter writerQ(fileName, "png");
+          writerQ.write(preview);
+
+      }
+
   }
 
 }

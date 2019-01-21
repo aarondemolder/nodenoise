@@ -4,6 +4,8 @@
 #include <QtWidgets/QTableWidget>
 #include <QGroupBox>
 #include <QDoubleSpinBox>
+#include <QLabel>
+#include <QFrame>
 
 #include <nodes/NodeDataModel>
 
@@ -75,6 +77,7 @@ private:
   QDoubleSpinBox *_lowerZBound;
 
   QDoubleSpinBox *_upperZBound;
+
 
 
 };

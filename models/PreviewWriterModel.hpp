@@ -8,6 +8,8 @@
 #include <nodes/DataModelRegistry>
 #include <nodes/NodeDataModel>
 
+#include "PixmapData.hpp"
+
 using QtNodes::PortType;
 using QtNodes::PortIndex;
 using QtNodes::NodeData;
@@ -29,9 +31,9 @@ public:
 
 public:
 
-  QString caption() const override { return QString("Click to Save"); }
+  QString caption() const override { return QString("Preview Link"); }
 
-  QString name() const override { return QString("Preview Writer"); }
+  QString name() const override { return QString("Preview Link"); }
 
 public:
 
@@ -39,7 +41,34 @@ public:
 
   unsigned int nPorts(PortType portType) const override;
 
-  NodeDataType dataType(PortType portType, PortIndex portIndex) const override;
+  NodeDataType dataType(PortType portType, PortIndex portIndex) const override
+  {
+    switch (portType)
+    {
+      case PortType::In:
+        switch (portIndex)
+        {
+            case 0:
+                return PixmapData().type();
+            case 1:
+                return PixmapData().type();
+        }
+        break;
+
+    case PortType::Out:
+      switch (portIndex)
+      {
+        //
+      }
+      break;
+
+    case PortType::None:
+      break;
+
+    }
+    return NodeDataType();
+  }
+
 
   std::shared_ptr<NodeData> outData(PortIndex port) override;
 

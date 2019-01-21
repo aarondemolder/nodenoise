@@ -46,6 +46,7 @@ class LnHeightMapBuilder : public NodeDataModel
 public:
   LnHeightMapBuilder();
 
+
   virtual
   ~LnHeightMapBuilder() {}
 
@@ -104,15 +105,6 @@ public:
     return NodeDataType();
   }
 
-protected:
-
-  bool eventFilter(QObject *object, QEvent *event) override;
-
-
-private slots:
-
-  void onTextEdited(QString const &string);
-
 
 private:
 
@@ -131,5 +123,7 @@ private:
   int _resSize = 256;
 
   int _resolution = 256;
+
+  int _boundSet = 0;
 
 };

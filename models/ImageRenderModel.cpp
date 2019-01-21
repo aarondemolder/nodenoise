@@ -22,6 +22,7 @@ ImageRenderModel::ImageRenderModel() : _label(new QLabel("ImageRender Model"))
     _label->setFixedSize(200, 200);
     _label->installEventFilter(this);
 
+
 }
 
 
@@ -36,7 +37,7 @@ unsigned int ImageRenderModel::nPorts(PortType portType) const
       break;
 
     case PortType::Out:
-      result = 1;
+      result = 2;
 
     default:
       break;

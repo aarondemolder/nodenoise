@@ -54,11 +54,6 @@ bool LnBillowModel::eventFilter(QObject *object, QEvent *event)
 
       return true;
     }
-    else if (event->type() == QEvent::Resize)
-    {
-      if (!_pixmap.isNull())
-        _label->setPixmap(_pixmap.scaled(w, h, Qt::KeepAspectRatio));
-    }
   }
 
   return false;
