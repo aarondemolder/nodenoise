@@ -16,6 +16,7 @@
 #include "models/ImageShowModel.hpp"
 #include "models/ImageLoaderModel.hpp"
 #include "models/ImageWriterModel.hpp"
+#include "models/PreviewWriterModel.hpp"
 #include "models/View3DModel.hpp"
 
 //Generators
@@ -75,6 +76,7 @@ static std::shared_ptr<DataModelRegistry>registerDataModels()
   ret->registerModel<ImageLoaderModel>("Image");
   ret->registerModel<ImageWriterModel>("Image");
   ret->registerModel<ImageRenderModel>("libNoise");
+  ret->registerModel<PreviewWriterModel>("Image");
 
 
   //libnoise nodes

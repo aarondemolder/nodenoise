@@ -40,7 +40,8 @@ HEADERS+= $$PWD/include/TextData.hpp \
                 $$PWD/include/glwidget.h \
                 #$$PWD/include/glwindow.h \
                 #$$PWD/include/glmainwindow.h \
-                $$PWD/include/logo.h
+                $$PWD/include/logo.h \
+                #$$PWD/include/Vec3.h
 
 
 INCLUDEPATH+=$$PWD/include \

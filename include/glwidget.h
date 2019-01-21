@@ -44,6 +44,7 @@ protected:
 
 private:
     void setupVertexAttribs();
+    void genGridPoints(int _width, int _depth);
 
     bool m_core;
     int m_xRot;
@@ -61,6 +62,9 @@ private:
     QMatrix4x4 m_proj;
     QMatrix4x4 m_camera;
     QMatrix4x4 m_world;
+
+    QOpenGLBuffer m_vertex;
+    QOpenGLVertexArrayObject m_object;
 
 };
 

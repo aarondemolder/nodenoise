@@ -4,18 +4,9 @@
 
 #include <QtCore/QObject>
 #include <QtWidgets/QLabel>
-#include <QOpenGLWidget>
-#include <QOpenGLFunctions>
-
-#include <QGroupBox>
-
 
 #include <nodes/DataModelRegistry>
 #include <nodes/NodeDataModel>
-
-#include "glwidget.h"
-
-
 
 using QtNodes::PortType;
 using QtNodes::PortIndex;
@@ -24,30 +15,27 @@ using QtNodes::NodeDataType;
 using QtNodes::NodeDataModel;
 using QtNodes::NodeValidationState;
 
-
-
 /// The model dictates the number of inputs and outputs for the Node.
 /// In this example it has no logic.
-class View3DModel : public NodeDataModel
+class PreviewWriterModel : public NodeDataModel
 {
   Q_OBJECT
 
 public:
-
-  View3DModel();
+  PreviewWriterModel();
 
   virtual
-  ~View3DModel() {}
+  ~PreviewWriterModel() {}
 
 public:
 
-  QString caption() const override { return QString("3D Viewer"); }
+  QString caption() const override { return QString("Click to Save"); }
 
-  QString name() const override { return QString("3D Viewer"); }
+  QString name() const override { return QString("Preview Writer"); }
 
 public:
 
-  virtual QString modelName() const { return QString("View3DModel"); }
+  virtual QString modelName() const { return QString("PreviewWriterModel"); }
 
   unsigned int nPorts(PortType portType) const override;
 
@@ -57,11 +45,7 @@ public:
 
   void setInData(std::shared_ptr<NodeData> nodeData, PortIndex port) override;
 
-  QWidget *embeddedWidget() override { return _view3d; }
-
-  bool resizable() const override { return true; }
-
-
+  QWidget *embeddedWidget() override { return _label; }
 
 protected:
 
@@ -69,14 +53,7 @@ protected:
 
 private:
 
-  GLWidget * _view3d;
+  QLabel * _label;
 
   std::shared_ptr<NodeData> _nodeData;
-
-  //QWidget * _openDisplay;
-
-
 };
-
-
-

@@ -4,12 +4,14 @@
 #include <QCoreApplication>
 #include <math.h>
 #include <iostream>
+#include "Vec3.h"
 
 
 
 GLWidget::GLWidget(QWidget *parent): QOpenGLWidget(parent), m_xRot(0), m_yRot(0), m_zRot(0), m_program(0)
 {
     m_core = QSurfaceFormat::defaultFormat().profile() == QSurfaceFormat::CoreProfile;
+
 
 }
 
@@ -135,10 +137,13 @@ static const char *fragmentShaderSource =
     "   gl_FragColor = vec4(col, 1.0);\n"
     "}\n";
 
+
+
+
 void GLWidget::initializeGL()
 {
     std::cout<<"init GL\n";
-    //connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &GLWidget::cleanup);
+    connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &GLWidget::cleanup);
 
     initializeOpenGLFunctions();
     //makeCurrent();
@@ -157,10 +162,7 @@ void GLWidget::initializeGL()
     m_normalMatrixLoc = m_program->uniformLocation("normalMatrix");
     m_lightPosLoc = m_program->uniformLocation("lightPos");
 
-    // Create a vertex array object. In OpenGL ES 2.0 and OpenGL 2.x
-    // implementations this is optional and support may not be present
-    // at all. Nonetheless the below code works in all cases and makes
-    // sure there is a VAO when one is needed.
+    // Create a vertex array object.
     m_vao.create();
     QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
 
@@ -181,7 +183,10 @@ void GLWidget::initializeGL()
 
     m_program->release();
 
+
     std::cout<<"done init GL\n";
+
+
 }
 
 void GLWidget::setupVertexAttribs()
@@ -233,7 +238,6 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
     m_lastPos = event->pos();
     std::cout<<"click\n";
     update();
-    event->accept();
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
@@ -250,8 +254,6 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
     }
     m_lastPos = event->pos();
     update();
-
-    event->accept();
 }
 
 //example
@@ -263,6 +265,5 @@ void GLWidget::keyPressEvent( QKeyEvent * event )
     {
         setXRotation(m_xRot + 8 * dy);
     }
-    event->accept();
     update();
 }
