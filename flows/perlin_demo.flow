@@ -1,0 +1,332 @@
+{
+    "connections": [
+        {
+            "in_id": "{a4407744-6f30-465c-9369-4cbaffc30bef}",
+            "in_index": 0,
+            "out_id": "{4f644e8c-bb84-4030-a6a1-0691946a6e3b}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{e214baa6-b447-4426-87e5-cce89ce323ea}",
+            "in_index": 4,
+            "out_id": "{a9c6a668-02e1-4534-a5db-ec7e7be53adc}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{e214baa6-b447-4426-87e5-cce89ce323ea}",
+            "in_index": 2,
+            "out_id": "{a2bf00af-a5a9-42f2-94fb-6b0165aefaf2}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{e214baa6-b447-4426-87e5-cce89ce323ea}",
+            "in_index": 3,
+            "out_id": "{47bfe389-490a-446e-8a30-dcfd8a718bbb}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{e214baa6-b447-4426-87e5-cce89ce323ea}",
+            "in_index": 1,
+            "out_id": "{93223abf-1fd6-4ad8-80a1-6e1718c80c17}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{4f644e8c-bb84-4030-a6a1-0691946a6e3b}",
+            "in_index": 1,
+            "out_id": "{dfb7ec4c-59d0-4e45-ba9c-ecc2bc1ab52b}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{52d3f2f3-b56b-47c3-a38f-f4439c0a89c7}",
+            "in_index": 1,
+            "out_id": "{7e5db7b3-bcaa-4f77-b8de-66b63967e705}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{52d3f2f3-b56b-47c3-a38f-f4439c0a89c7}",
+            "in_index": 3,
+            "out_id": "{a718bf3e-0f1e-48e3-8f0c-6488b0a461c2}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{52d3f2f3-b56b-47c3-a38f-f4439c0a89c7}",
+            "in_index": 2,
+            "out_id": "{8bc353ca-7d10-4c94-9526-0feb9ed248ac}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{86d0e8b2-f8de-4206-9ae0-0dfb226f9f78}",
+            "in_index": 1,
+            "out_id": "{52d3f2f3-b56b-47c3-a38f-f4439c0a89c7}",
+            "out_index": 1
+        },
+        {
+            "in_id": "{4f644e8c-bb84-4030-a6a1-0691946a6e3b}",
+            "in_index": 2,
+            "out_id": "{a2bf00af-a5a9-42f2-94fb-6b0165aefaf2}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{86d0e8b2-f8de-4206-9ae0-0dfb226f9f78}",
+            "in_index": 3,
+            "out_id": "{ed655fbb-1be5-4af7-a146-f4065f99075a}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{86d0e8b2-f8de-4206-9ae0-0dfb226f9f78}",
+            "in_index": 2,
+            "out_id": "{fb98f0c8-4664-473f-8313-e1e6a5759ba9}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{86d0e8b2-f8de-4206-9ae0-0dfb226f9f78}",
+            "in_index": 0,
+            "out_id": "{52d3f2f3-b56b-47c3-a38f-f4439c0a89c7}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{4f644e8c-bb84-4030-a6a1-0691946a6e3b}",
+            "in_index": 0,
+            "out_id": "{86d0e8b2-f8de-4206-9ae0-0dfb226f9f78}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{a4407744-6f30-465c-9369-4cbaffc30bef}",
+            "in_index": 1,
+            "out_id": "{e214baa6-b447-4426-87e5-cce89ce323ea}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{4f46f6cb-e119-41c2-b0e0-b62c257f9de9}",
+            "in_index": 0,
+            "out_id": "{4f644e8c-bb84-4030-a6a1-0691946a6e3b}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{40c88a29-816c-49c4-b547-f6c90284f61b}",
+            "in_index": 0,
+            "out_id": "{e214baa6-b447-4426-87e5-cce89ce323ea}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{52d3f2f3-b56b-47c3-a38f-f4439c0a89c7}",
+            "in_index": 5,
+            "out_id": "{13e3b155-19a0-4fdc-a869-e63b5fc64e9f}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{52d3f2f3-b56b-47c3-a38f-f4439c0a89c7}",
+            "in_index": 0,
+            "out_id": "{e66a1dc6-7606-4904-a6c6-b45c517d6153}",
+            "out_index": 0
+        },
+        {
+            "in_id": "{e214baa6-b447-4426-87e5-cce89ce323ea}",
+            "in_index": 0,
+            "out_id": "{86d0e8b2-f8de-4206-9ae0-0dfb226f9f78}",
+            "out_index": 0
+        }
+    ],
+    "nodes": [
+        {
+            "id": "{a9c6a668-02e1-4534-a5db-ec7e7be53adc}",
+            "model": {
+                "name": "Auto Gradient",
+                "number": "1"
+            },
+            "position": {
+                "x": 299.5200000000001,
+                "y": 724.3199999999997
+            }
+        },
+        {
+            "id": "{93223abf-1fd6-4ad8-80a1-6e1718c80c17}",
+            "model": {
+                "name": "Light Brightness Source",
+                "number": "2.3"
+            },
+            "position": {
+                "x": 326.87999999999994,
+                "y": 243.3599999999999
+            }
+        },
+        {
+            "id": "{a718bf3e-0f1e-48e3-8f0c-6488b0a461c2}",
+            "model": {
+                "name": "Persistence Source",
+                "number": "0.5"
+            },
+            "position": {
+                "x": -903.5999999999999,
+                "y": -6
+            }
+        },
+        {
+            "id": "{dfb7ec4c-59d0-4e45-ba9c-ecc2bc1ab52b}",
+            "model": {
+                "name": "Light Brightness Source",
+                "number": "1.8"
+            },
+            "position": {
+                "x": 325.43999999999994,
+                "y": 165.59999999999997
+            }
+        },
+        {
+            "id": "{7e5db7b3-bcaa-4f77-b8de-66b63967e705}",
+            "model": {
+                "name": "Lacunarity Source",
+                "number": "2"
+            },
+            "position": {
+                "x": -878.3999999999999,
+                "y": -175.2
+            }
+        },
+        {
+            "id": "{ed655fbb-1be5-4af7-a146-f4065f99075a}",
+            "model": {
+                "name": "Bounds Source"
+            },
+            "position": {
+                "x": -240.47999999999985,
+                "y": 240.47999999999996
+            }
+        },
+        {
+            "id": "{a2bf00af-a5a9-42f2-94fb-6b0165aefaf2}",
+            "model": {
+                "name": "Light Contrast Source",
+                "number": "1.7"
+            },
+            "position": {
+                "x": 331.2000000000002,
+                "y": 374.3999999999998
+            }
+        },
+        {
+            "id": "{8bc353ca-7d10-4c94-9526-0feb9ed248ac}",
+            "model": {
+                "name": "Octave Source",
+                "number": "6"
+            },
+            "position": {
+                "x": -854.3999999999999,
+                "y": -93.60000000000001
+            }
+        },
+        {
+            "id": "{fb98f0c8-4664-473f-8313-e1e6a5759ba9}",
+            "model": {
+                "name": "Resolution Source",
+                "number": "2"
+            },
+            "position": {
+                "x": -241.91999999999993,
+                "y": 118.07999999999996
+            }
+        },
+        {
+            "id": "{52d3f2f3-b56b-47c3-a38f-f4439c0a89c7}",
+            "model": {
+                "name": "Perlin Noise Generator"
+            },
+            "position": {
+                "x": -466.2399999999999,
+                "y": -213.87999999999994
+            }
+        },
+        {
+            "id": "{86d0e8b2-f8de-4206-9ae0-0dfb226f9f78}",
+            "model": {
+                "name": "HeightMap Builder"
+            },
+            "position": {
+                "x": 269.27999999999986,
+                "y": -234.72
+            }
+        },
+        {
+            "id": "{a4407744-6f30-465c-9369-4cbaffc30bef}",
+            "model": {
+                "name": "Preview Link"
+            },
+            "position": {
+                "x": 1771.1999999999994,
+                "y": 129.60000000000002
+            }
+        },
+        {
+            "id": "{47bfe389-490a-446e-8a30-dcfd8a718bbb}",
+            "model": {
+                "name": "Colour Source"
+            },
+            "position": {
+                "x": 305.28,
+                "y": 470.8799999999999
+            }
+        },
+        {
+            "id": "{e66a1dc6-7606-4904-a6c6-b45c517d6153}",
+            "model": {
+                "name": "Frequency Source",
+                "number": "4"
+            },
+            "position": {
+                "x": -836.64,
+                "y": -257.76
+            }
+        },
+        {
+            "id": "{e214baa6-b447-4426-87e5-cce89ce323ea}",
+            "model": {
+                "name": "Image Renderer"
+            },
+            "position": {
+                "x": 833.76,
+                "y": 302.40000000000003
+            }
+        },
+        {
+            "id": "{40c88a29-816c-49c4-b547-f6c90284f61b}",
+            "model": {
+                "name": "Image Writer"
+            },
+            "position": {
+                "x": 1775.52,
+                "y": 531.3599999999999
+            }
+        },
+        {
+            "id": "{4f644e8c-bb84-4030-a6a1-0691946a6e3b}",
+            "model": {
+                "name": "Image Renderer"
+            },
+            "position": {
+                "x": 833.7599999999998,
+                "y": -233.27999999999994
+            }
+        },
+        {
+            "id": "{4f46f6cb-e119-41c2-b0e0-b62c257f9de9}",
+            "model": {
+                "name": "Image Writer"
+            },
+            "position": {
+                "x": 1769.7599999999995,
+                "y": -233.27999999999997
+            }
+        },
+        {
+            "id": "{13e3b155-19a0-4fdc-a869-e63b5fc64e9f}",
+            "model": {
+                "name": "Quality Source",
+                "number": "2"
+            },
+            "position": {
+                "x": -866.88,
+                "y": 98.15999999999998
+            }
+        }
+    ]
+}
