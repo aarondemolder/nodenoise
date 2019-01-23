@@ -17,7 +17,7 @@
 //This node accepts two image connections and saves them as '.pre' files into the preview folder
 //These files are two 1024*1024 .png images in disguise, one heightmap and one diffuse
 //NNPRV can then pick these files up, and generate a 3D preview
-PreviewWriterModel::PreviewWriterModel() : _label(new QLabel("Input Heightmap in Port 1 \n Diffuse in Port 2 \n\n For best results, set resolution to at least \n 1024x1024!"))
+PreviewWriterModel::PreviewWriterModel() : _label(new QLabel("Input Heightmap in Port 1 \n Diffuse in Port 2 \n\n For best results,\n set resolution to at least \n 1024x1024!"))
 {
   _label->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
   QFont f = _label->font();
