@@ -24,6 +24,7 @@ A node based terrain generator using Qt, [Paceholder's Nodeeditor](https://githu
 * User input paint tools for raising/digging terrain - though for now this can be done on the OBJ in 3D DCC of choice by scalaing a soft selection.
 * Multi-threaded noise generation by dividing chunks set by the bounds
 * Image combiner nodes such as Add, Multiply, Divide etc
+* Heightmap clipping indicator
 
 ![nodenoise graph editor](https://i.imgur.com/OIOE8md.jpg)
 
