@@ -31,8 +31,7 @@ QJsonObject ColourSourceDataModel::save() const
 {
   QJsonObject modelJson = NodeDataModel::save();
 
-  //Should probably fix colour saving
-  //if (_colour) modelJson["colour"] = QColor::name(_colour);
+  if (_colour) modelJson["colour"] = _colour->colour().name();
 
   return modelJson;
 }
@@ -44,19 +43,13 @@ void ColourSourceDataModel::restore(QJsonObject const &p)
 
   if (!v.isUndefined())
   {
-    QString strNum = v.toString();
+    QColor colour = v.toString();
+    _colour = std::make_shared<ColourData>(colour);
 
-    bool   ok;
-    double d = strNum.toDouble(&ok);
-    if (ok)
-    {
-      _colour = std::make_shared<ColourData>(d);
-
-      QPalette palette = _label->palette();
-      palette.setColor(_label->backgroundRole(), _colour->colour());
-      palette.setColor(_label->foregroundRole(), Qt::transparent);
-      _label->setPalette(palette);
-    }
+    QPalette palette = _label->palette();
+    palette.setColor(_label->backgroundRole(), _colour->colour());
+    palette.setColor(_label->foregroundRole(), Qt::transparent);
+    _label->setPalette(palette);
   }
 }
 
