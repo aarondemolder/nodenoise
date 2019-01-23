@@ -1,6 +1,6 @@
 # nodenoise
 
-A node based terrain generator using Qt, [Paceholder's Nodeeditor](https://github.com/paceholder/nodeeditor), and [libNoise](http://libnoise.sourceforge.net/index.html).
+A node based terrain generator using Qt, [Paceholder's Nodeeditor](https://github.com/paceholder/nodeeditor), and [libnoise](http://libnoise.sourceforge.net/index.html).
 
 ### Features
 
@@ -19,8 +19,8 @@ A node based terrain generator using Qt, [Paceholder's Nodeeditor](https://githu
 
 ### Future Features
 
-* libNoise Scale Bias implementation
-* libNoise Selection & Combiner nodes
+* libnoise Scale Bias implementation
+* libnoise Selection & Combiner nodes
 * User input paint tools for raising/digging terrain - though for now this can be done on the OBJ in 3D DCC of choice by scalaing a soft selection.
 * Multi-threaded noise generation by dividing chunks set by the bounds
 * Image combiner nodes such as Add, Multiply, Divide etc
