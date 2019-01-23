@@ -7,9 +7,12 @@
 
 #include "noise/noise.h"
 
+//This node sets our colour values for the image renderer
+//Create colour selection node with large QLabel
 ColourSourceDataModel::ColourSourceDataModel(): _label(new QLabel("Click to select"))
 {
 
+    //formatting
     _label->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
     _label->setAutoFillBackground(true);
     QFont f = _label->font();
@@ -17,11 +20,13 @@ ColourSourceDataModel::ColourSourceDataModel(): _label(new QLabel("Click to sele
     f.setItalic(true);
     _label->setFont(f);
     _label->setFixedSize(200, 200);
+
+    //allow us to trigger events when clicked
     _label->installEventFilter(this);
 
 }
 
-
+//colour value saving
 QJsonObject ColourSourceDataModel::save() const
 {
   QJsonObject modelJson = NodeDataModel::save();
@@ -32,7 +37,7 @@ QJsonObject ColourSourceDataModel::save() const
   return modelJson;
 }
 
-
+//colour value restoring
 void ColourSourceDataModel::restore(QJsonObject const &p)
 {
   QJsonValue v = p["colour"];
@@ -55,7 +60,7 @@ void ColourSourceDataModel::restore(QJsonObject const &p)
   }
 }
 
-
+//configure ports
 unsigned int ColourSourceDataModel::nPorts(PortType portType) const
 {
   unsigned int result = 1;
@@ -76,25 +81,27 @@ unsigned int ColourSourceDataModel::nPorts(PortType portType) const
   return result;
 }
 
+//event filter for clicks on the label
 bool ColourSourceDataModel::eventFilter(QObject *object, QEvent *event)
 {
-
-
     if (object == _label)
     {
 
       if (event->type() == QEvent::MouseButtonPress)
       {
 
+          //open colour selection dialog
           QColor selection = QColorDialog::getColor();
           if( selection.isValid() )
           {
 
+              //set background colour of label to be colour selection
               QPalette palette = _label->palette();
               palette.setColor(_label->backgroundRole(), selection);
               palette.setColor(_label->foregroundRole(), Qt::transparent);
               _label->setPalette(palette);
 
+              //set colour value for node
               _colour = std::make_shared<ColourData>(selection);
 
               emit dataUpdated(0);
@@ -107,13 +114,13 @@ bool ColourSourceDataModel::eventFilter(QObject *object, QEvent *event)
   return false;
 }
 
-
+//configure data output type
 NodeDataType ColourSourceDataModel::dataType(PortType, PortIndex) const
 {
   return ColourData().type();
 }
 
-
+//node data return
 std::shared_ptr<NodeData>ColourSourceDataModel::outData(PortIndex)
 {
   return _colour;

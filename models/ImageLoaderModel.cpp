@@ -5,22 +5,20 @@
 
 #include <QtWidgets/QFileDialog>
 
+//This node loads images, sets it as the label pixmap, and emits pixmap data
+//Create large Qlabel with click event
 ImageLoaderModel::ImageLoaderModel() : _label(new QLabel("Double click to load image"))
 {
   _label->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
-
   QFont f = _label->font();
   f.setBold(true);
   f.setItalic(true);
-
   _label->setFont(f);
-
   _label->setFixedSize(200, 200);
-
   _label->installEventFilter(this);
 }
 
-
+//port config
 unsigned int ImageLoaderModel::nPorts(PortType portType) const
 {
   unsigned int result = 1;
@@ -41,7 +39,7 @@ unsigned int ImageLoaderModel::nPorts(PortType portType) const
   return result;
 }
 
-
+//Open image from path and set label to pixmap of image selection, also emit this data
 bool ImageLoaderModel::eventFilter(QObject *object, QEvent *event)
 {
   if (object == _label)
@@ -76,13 +74,13 @@ bool ImageLoaderModel::eventFilter(QObject *object, QEvent *event)
   return false;
 }
 
-
+//config return type
 NodeDataType ImageLoaderModel::dataType(PortType, PortIndex) const
 {
   return PixmapData().type();
 }
 
-
+//node data return
 std::shared_ptr<NodeData>ImageLoaderModel::outData(PortIndex)
 {
   return std::make_shared<PixmapData>(_pixmap);

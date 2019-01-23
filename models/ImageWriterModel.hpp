@@ -15,8 +15,7 @@ using QtNodes::NodeDataType;
 using QtNodes::NodeDataModel;
 using QtNodes::NodeValidationState;
 
-/// The model dictates the number of inputs and outputs for the Node.
-/// In this example it has no logic.
+//The class dictates the node settings and objects such as caption, number of inputs and outputs and more.
 class ImageWriterModel : public NodeDataModel
 {
   Q_OBJECT

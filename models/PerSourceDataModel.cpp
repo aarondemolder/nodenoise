@@ -7,6 +7,7 @@
 
 #include "noise/noise.h"
 
+//This node creates persistence values for noise generation
 PerSourceDataModel::PerSourceDataModel(): _spinBox(new QDoubleSpinBox())
 {
   _spinBox->setRange(0.0,1.0);

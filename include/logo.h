@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QVector3D>
 
+//Class for the QT Logo creation to test 3D drawing
 class Logo
 {
 public:

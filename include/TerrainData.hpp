@@ -8,6 +8,7 @@
 using QtNodes::NodeData;
 using QtNodes::NodeDataType;
 
+//Class used to describe the various Terrain data types used by the heightmap generator
 class TerrainData : public NodeData
 {
 public:

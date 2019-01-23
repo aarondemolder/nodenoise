@@ -4,15 +4,13 @@
 #include <QCoreApplication>
 #include <math.h>
 #include <iostream>
-#include "Vec3.h"
 
 
-
+//This creates and draws my QOpenGLWidget
+//View3DModel.cpp creates this within a node
 GLWidget::GLWidget(QWidget *parent): QOpenGLWidget(parent), m_xRot(0), m_yRot(0), m_zRot(0), m_program(0)
 {
     m_core = QSurfaceFormat::defaultFormat().profile() == QSurfaceFormat::CoreProfile;
-
-
 }
 
 GLWidget::~GLWidget()

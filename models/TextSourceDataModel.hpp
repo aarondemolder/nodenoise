@@ -1,7 +1,6 @@
 #pragma once
 
 #include <QtCore/QObject>
-//#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QTextEdit>
 
 #include "TextData.hpp"
@@ -15,8 +14,7 @@ using QtNodes::PortIndex;
 using QtNodes::NodeData;
 using QtNodes::NodeDataModel;
 
-/// The model dictates the number of inputs and outputs for the Node.
-/// In this example it has no logic.
+//The class dictates the node settings and objects such as caption, number of inputs and outputs and more.
 class TextSourceDataModel : public NodeDataModel
 {
   Q_OBJECT
@@ -39,6 +37,12 @@ public:
 
 public:
 
+  QJsonObject save() const override;
+
+  void restore(QJsonObject const &p) override;
+
+public:
+
   unsigned int nPorts(PortType portType) const override;
 
   NodeDataType dataType(PortType portType, PortIndex portIndex) const override;
@@ -49,17 +53,11 @@ public:
 
   QWidget *embeddedWidget() override { return _lineEdit; }
 
-  //bool resizable() const override { return true; }
-
-
 private slots:
 
-  void onTextEdited(QString const &string);
-
+  void onTextEdited();
 
 private:
-
-  //QLineEdit * _lineEdit;
 
   QTextEdit * _lineEdit;
 

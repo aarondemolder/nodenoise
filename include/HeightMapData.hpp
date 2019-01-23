@@ -9,6 +9,7 @@
 using QtNodes::NodeData;
 using QtNodes::NodeDataType;
 
+//Class to describe all our heightmap data, which is used by the Image Renderer node
 class HeightMapData : public NodeData
 {
 public:

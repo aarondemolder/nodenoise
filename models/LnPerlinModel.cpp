@@ -9,9 +9,11 @@
 #include <QPixmap>
 #include <QImageWriter>
 
-
+//This node generates perlin noise using default values or using user input value, it outputs an ID, heightmap data and an image
 LnPerlinModel::LnPerlinModel() : _label(new QLabel("Perlin Noise Module"))
 {
+    //click to regenerate fix
+    _label->installEventFilter(this);
     defaultImgRenderer();
 }
 
@@ -37,33 +39,23 @@ unsigned int LnPerlinModel::nPorts(PortType portType) const
   return result;
 }
 
-
+//we emit heightmap data when the label is clicked
 bool LnPerlinModel::eventFilter(QObject *object, QEvent *event)
 {
   if (object == _label)
   {
-    int w = _label->width();
-    int h = _label->height();
-
     if (event->type() == QEvent::MouseButtonPress)
     {
-
-      _label->setPixmap(_pixmap.scaled(w, h, Qt::KeepAspectRatio));
-
-      emit dataUpdated(2);
+      emit dataUpdated(1);
 
       return true;
-    }
-    else if (event->type() == QEvent::Resize)
-    {
-      if (!_pixmap.isNull())
-        _label->setPixmap(_pixmap.scaled(w, h, Qt::KeepAspectRatio));
     }
   }
 
   return false;
 }
 
+//emit image if image is updated
 void LnPerlinModel::onPixmapEdited(QPixmap const &pixmap)
 {
   Q_UNUSED(pixmap);
@@ -74,6 +66,7 @@ void LnPerlinModel::onPixmapEdited(QPixmap const &pixmap)
 
 }
 
+//set generator values from user input
 void LnPerlinModel::setInData(std::shared_ptr<NodeData> data, int)
 {
   auto freqData = std::dynamic_pointer_cast<FreqData>(data);
@@ -124,8 +117,7 @@ void LnPerlinModel::setInData(std::shared_ptr<NodeData> data, int)
     }
   }
 
-  ///image preview processing
-
+  //image preview processing
   utils::NoiseMap heightMap;
   utils::NoiseMapBuilderPlane heightMapBuilder;
 
@@ -170,6 +162,7 @@ void LnPerlinModel::setInData(std::shared_ptr<NodeData> data, int)
 
 }
 
+//ensures data exists to send to heightmap builder even if no input connections are made
 void LnPerlinModel::defaultImgRenderer()
 {
 

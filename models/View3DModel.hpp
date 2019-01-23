@@ -7,14 +7,10 @@
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 
-#include <QGroupBox>
-
-
 #include <nodes/DataModelRegistry>
 #include <nodes/NodeDataModel>
 
 #include "glwidget.h"
-
 
 
 using QtNodes::PortType;
@@ -25,9 +21,7 @@ using QtNodes::NodeDataModel;
 using QtNodes::NodeValidationState;
 
 
-
-/// The model dictates the number of inputs and outputs for the Node.
-/// In this example it has no logic.
+//The class dictates the node settings and objects such as caption, number of inputs and outputs and more.
 class View3DModel : public NodeDataModel
 {
   Q_OBJECT
@@ -69,11 +63,9 @@ protected:
 
 private:
 
-  GLWidget * _view3d;
+  GLWidget *_view3d;
 
   std::shared_ptr<NodeData> _nodeData;
-
-  //QWidget * _openDisplay;
 
 
 };

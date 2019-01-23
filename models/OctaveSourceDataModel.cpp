@@ -7,6 +7,7 @@
 
 #include <noise/noise.h>
 
+//This node allows a user to specify octave values for noise generation
 OctaveSourceDataModel::OctaveSourceDataModel(): _spinBox(new QSpinBox())
 {
   _spinBox->setRange(1,30);

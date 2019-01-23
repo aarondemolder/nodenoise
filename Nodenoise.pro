@@ -11,8 +11,6 @@ SOURCES += $$PWD/src/main.cpp \
                 $$PWD/nodes/*.cpp \
                 $$PWD/models/*.cpp \
                 $$PWD/src/glwidget.cpp \
-                #$$PWD/src/glwindow.cpp \
-                #$$PWD/src/glmainwindow.cpp \
                 $$PWD/src/logo.cpp
 
 HEADERS+= $$PWD/include/TextData.hpp \
@@ -38,10 +36,7 @@ HEADERS+= $$PWD/include/TextData.hpp \
                 $$PWD/nodes/*.hpp \
                 $$PWD/models/*.hpp \
                 $$PWD/include/glwidget.h \
-                #$$PWD/include/glwindow.h \
-                #$$PWD/include/glmainwindow.h \
                 $$PWD/include/logo.h \
-                #$$PWD/include/Vec3.h
 
 
 INCLUDEPATH+=$$PWD/include

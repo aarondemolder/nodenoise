@@ -14,6 +14,7 @@
 #include <QImageWriter>
 #include <QFileDialog>
 
+//This node saves pixmap data as an image file
 ImageWriterModel::ImageWriterModel() : _label(new QLabel("Image Preview"))
 {
   _label->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);

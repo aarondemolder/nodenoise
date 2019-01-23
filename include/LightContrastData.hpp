@@ -5,8 +5,7 @@
 using QtNodes::NodeDataType;
 using QtNodes::NodeData;
 
-/// The class can potentially incapsulate any user data which
-/// need to be transferred within the Node Editor graph
+//Class used to describe the light contrast values used by the Image Renderer node
 class LightContrastData : public NodeData
 {
 public:

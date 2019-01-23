@@ -16,7 +16,12 @@
 #include <QWidget>
 #include <QGraphicsSceneHoverEvent>
 
+//this node was intended to display the terrain 3D preview, but without opening another application
+//ideally this would be the best way to keep everything within the graph
+//in reality, I couldn't figure out how to correctly parent it to the graph view, so it only updates when there's a mouse event in the graph
 
+//it was also intended to use NGL here, but QT conflicts with gl3w - apparently calling NGL headers before Qt ones can fix this
+//So instead this example uses QOpenGL
 View3DModel::View3DModel(): _view3d(new GLWidget())
 {
     //displays another openglwindow seperate
@@ -54,8 +59,7 @@ bool View3DModel::eventFilter(QObject *object, QEvent *event)
     {
         if (event->type() == QEvent::MouseButtonPress)
         {
-
-
+            //registers a click!
             std::cout<<"click?\n";
             return true;
         }
@@ -78,6 +82,5 @@ std::shared_ptr<NodeData>View3DModel::outData(PortIndex)
 
 void View3DModel::setInData(std::shared_ptr<NodeData> nodeData, PortIndex)
 {
-
-
+  //
 }

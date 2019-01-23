@@ -6,8 +6,7 @@
 using QtNodes::NodeDataType;
 using QtNodes::NodeData;
 
-/// The class can potentially incapsulate any user data which
-/// need to be transferred within the Node Editor graph
+//Class to describe Bounds coordinates values used in Heightmap generator node
 class BoundsData : public NodeData
 {
 public:

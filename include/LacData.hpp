@@ -5,8 +5,7 @@
 using QtNodes::NodeDataType;
 using QtNodes::NodeData;
 
-/// The class can potentially incapsulate any user data which
-/// need to be transferred within the Node Editor graph
+//Class used to describe Lacunarity data used by the noise generator nodes
 class LacData : public NodeData
 {
 public:

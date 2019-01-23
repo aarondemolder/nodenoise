@@ -7,6 +7,7 @@
 
 #include "noise/noise.h"
 
+//this node allows the user to set quality values used in noise generation
 QualitySourceDataModel::QualitySourceDataModel(): _comboBox(new QComboBox())
 {
   _comboBox->addItem("Fast");

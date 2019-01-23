@@ -7,6 +7,8 @@
 
 #include "noise/noise.h"
 
+//This node is meant to be part of the scale bias generation - so has been removed
+//It sets the scale
 ScaleSourceDataModel::ScaleSourceDataModel(): _spinBox(new QDoubleSpinBox())
 {
   _spinBox->setRange(-10,10);

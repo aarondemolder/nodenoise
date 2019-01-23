@@ -15,6 +15,7 @@ using QtNodes::NodeGraphicsObject;
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
+//Class built to allow 3D viewer to be placed within a node - included but doesn't accept our actual heightmap data, might fix later
 class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT

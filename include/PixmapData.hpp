@@ -7,6 +7,7 @@
 using QtNodes::NodeData;
 using QtNodes::NodeDataType;
 
+//Class to describe Pixmap Data used an passed between various nodes
 class PixmapData : public NodeData
 {
 public:

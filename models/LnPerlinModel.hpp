@@ -29,9 +29,7 @@ using QtNodes::NodeDataModel;
 using QtNodes::NodeDataType;
 
 
-
-/// The model dictates the number of inputs and outputs for the Node.
-/// In this example it has no logic.
+//The class dictates the node settings and objects such as caption, number of inputs and outputs and more.
 class LnPerlinModel : public NodeDataModel
 {
   Q_OBJECT

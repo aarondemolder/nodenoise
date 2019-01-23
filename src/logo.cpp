@@ -1,6 +1,8 @@
 #include "logo.h"
 #include <qmath.h>
 
+
+//Just makes the Qt logo for drawing within the View3DModel as a test
 Logo::Logo()
     : m_count(0)
 {

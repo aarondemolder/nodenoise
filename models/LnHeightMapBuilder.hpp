@@ -1,26 +1,13 @@
 #pragma once
 
 #include <QtCore/QObject>
-//#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QLabel>
-//#include <QtWidgets/QTextEdit>
 
 #include "IdentifierData.hpp"
 #include "TerrainData.hpp"
 #include "HeightMapData.hpp"
 #include "ResolutionData.hpp"
 #include "BoundsData.hpp"
-
-#include "DecimalData.hpp"
-
-#include "FreqData.hpp"
-#include "LacData.hpp"
-#include "OctaveData.hpp"
-#include "PerData.hpp"
-#include "SeedData.hpp"
-#include "QualityData.hpp"
-
-#include "PixmapData.hpp"
 
 #include <nodes/NodeData>
 #include <nodes/NodeDataModel>
@@ -36,9 +23,7 @@ using QtNodes::NodeDataModel;
 using QtNodes::NodeDataType;
 
 
-
-/// The model dictates the number of inputs and outputs for the Node.
-/// In this example it has no logic.
+//The class dictates the node settings and objects such as caption, number of inputs and outputs and more.
 class LnHeightMapBuilder : public NodeDataModel
 {
   Q_OBJECT

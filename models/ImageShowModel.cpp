@@ -9,18 +9,15 @@
 
 #include "PixmapData.hpp"
 
+//This node displays any pixmap data, and emits the same data, refreshes if clicked
 ImageShowModel::ImageShowModel() : _label(new QLabel("Image will appear here"))
 {
   _label->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
-
   QFont f = _label->font();
   f.setBold(true);
   f.setItalic(true);
-
   _label->setFont(f);
-
   _label->setFixedSize(200, 200);
-
   _label->installEventFilter(this);
 }
 

@@ -7,7 +7,7 @@
 *****************************************************************************/
 
 static const unsigned char qt_resource_data[] = {
-  // /home/ademolder/Documents/ASE_project/node_noise/nodes/resources/DefaultStyle.json
+  // /home/ademolder/Documents/ASE_project/nodenoise/nodes/resources/DefaultStyle.json
   0x0,0x0,0x4,0x17,
   0x7b,
   0xa,0x20,0x20,0x22,0x46,0x6c,0x6f,0x77,0x56,0x69,0x65,0x77,0x53,0x74,0x79,0x6c,

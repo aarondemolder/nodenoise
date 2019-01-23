@@ -7,6 +7,7 @@
 
 #include "noise/noise.h"
 
+//This node sets the image renderer light contrast
 LnLightContrastModel::LnLightContrastModel(): _spinBox(new QDoubleSpinBox())
 {
   _spinBox->setRange(0.1,10);

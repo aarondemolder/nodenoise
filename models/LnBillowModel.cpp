@@ -9,9 +9,12 @@
 #include <QPixmap>
 #include <QImageWriter>
 
-
+//This node generates Billow noise using libnoise, displays result in label
 LnBillowModel::LnBillowModel() : _label(new QLabel("Billow Noise Module"))
 {
+    //allows label click to trigger event
+    _label->installEventFilter(this);
+    //generates default billow
     defaultImgRenderer();
 }
 
@@ -42,15 +45,11 @@ bool LnBillowModel::eventFilter(QObject *object, QEvent *event)
 {
   if (object == _label)
   {
-    int w = _label->width();
-    int h = _label->height();
 
     if (event->type() == QEvent::MouseButtonPress)
     {
-
-      _label->setPixmap(_pixmap.scaled(w, h, Qt::KeepAspectRatio));
-
-      emit dataUpdated(2);
+      //emit terrain data if label is clicked
+      emit dataUpdated(1);
 
       return true;
     }
@@ -59,6 +58,7 @@ bool LnBillowModel::eventFilter(QObject *object, QEvent *event)
   return false;
 }
 
+//if image is edited update image output
 void LnBillowModel::onPixmapEdited(QPixmap const &pixmap)
 {
   Q_UNUSED(pixmap);
@@ -69,6 +69,7 @@ void LnBillowModel::onPixmapEdited(QPixmap const &pixmap)
 
 }
 
+//when connections are made, set values
 void LnBillowModel::setInData(std::shared_ptr<NodeData> data, int)
 {
   auto freqData = std::dynamic_pointer_cast<FreqData>(data);
@@ -119,8 +120,7 @@ void LnBillowModel::setInData(std::shared_ptr<NodeData> data, int)
     }
   }
 
-  ///image preview processing
-
+  //image preview processing
   utils::NoiseMap heightMap;
   utils::NoiseMapBuilderPlane heightMapBuilder;
 
@@ -165,6 +165,7 @@ void LnBillowModel::setInData(std::shared_ptr<NodeData> data, int)
 
 }
 
+//ensures data exists to send to heightmap builder even if no input connections are made
 void LnBillowModel::defaultImgRenderer()
 {
 

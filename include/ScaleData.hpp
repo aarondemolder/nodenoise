@@ -5,8 +5,7 @@
 using QtNodes::NodeDataType;
 using QtNodes::NodeData;
 
-/// The class can potentially incapsulate any user data which
-/// need to be transferred within the Node Editor graph
+//Class to describe Scale Values used in Scale Bias node - removed from build due to instability, might fix later
 class ScaleData : public NodeData
 {
 public:

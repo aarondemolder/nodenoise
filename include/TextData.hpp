@@ -5,6 +5,7 @@
 using QtNodes::NodeData;
 using QtNodes::NodeDataType;
 
+//General template class for text data
 class TextData : public NodeData
 {
 public:

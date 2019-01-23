@@ -1,10 +1,10 @@
 #include "TextSourceDataModel.hpp"
 
+//This node provides a text box for notes around the graph editor, it's not connected to anything
+//It also saves the notes!
 TextSourceDataModel::TextSourceDataModel() : _lineEdit(new QTextEdit("Notes..."))
 {
-//  connect(_lineEdit, &QTextEdit,this, &TextSourceDataModel::onTextEdited);
   _lineEdit->resize(200, 100);
-
 }
 
 
@@ -29,14 +29,35 @@ TextSourceDataModel::nPorts(PortType portType) const
   return result;
 }
 
-
-void TextSourceDataModel::onTextEdited(QString const &string)
+//text saving
+QJsonObject TextSourceDataModel::save() const
 {
-  //Q_UNUSED(string);
+  QJsonObject modelJson = NodeDataModel::save();
 
-  //emit dataUpdated(0);
+  if (_lineEdit) modelJson["text"] = _lineEdit->toPlainText();
+
+  return modelJson;
 }
 
+//text restoring
+void TextSourceDataModel::restore(QJsonObject const &p)
+{
+  QJsonValue v = p["text"];
+
+  if (!v.isUndefined())
+  {
+    QString text = v.toString();
+
+    _lineEdit->setText(text);
+  }
+}
+
+void TextSourceDataModel::onTextEdited()
+{
+  QString text = _lineEdit->toPlainText();
+
+  emit dataUpdated(0);
+}
 
 
 NodeDataType TextSourceDataModel::dataType(PortType, PortIndex) const
@@ -48,5 +69,4 @@ NodeDataType TextSourceDataModel::dataType(PortType, PortIndex) const
 std::shared_ptr<NodeData>TextSourceDataModel::outData(PortIndex)
 {
     //
-    //return std::make_shared<TextData>(_lineEdit->text());
 }

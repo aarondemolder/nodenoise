@@ -10,16 +10,17 @@
 
 #include <nodes/DataModelRegistry>
 
+//now we bring in all our node model headers
+
 //Misc viewers
 #include "models/TextSourceDataModel.hpp"
-#include "models/NumberSourceDataModel.hpp"
 #include "models/ImageShowModel.hpp"
 #include "models/ImageLoaderModel.hpp"
 #include "models/ImageWriterModel.hpp"
 #include "models/PreviewWriterModel.hpp"
 #include "models/View3DModel.hpp"
 
-//Generators
+//Generators & Value Inputs
 #include "models/LnPerlinModel.hpp"
 #include "models/LnBillowModel.hpp"
 #include "models/LnRidgedMultiModel.hpp"
@@ -40,13 +41,6 @@
 #include "models/LnAutoGradientModel.hpp"
 #include "models/ColourSourceDataModel.hpp"
 
-//#include "models/LnScaleBiasModel.hpp"
-//#include "models/BiasSourceDataModel.hpp"
-//#include "models/ScaleSourceDataModel.hpp"
-
-#include"models/MultiInputModel.hpp"
-
-
 using QtNodes::DataModelRegistry;
 using QtNodes::FlowView;
 using QtNodes::FlowScene;
@@ -56,53 +50,45 @@ static std::shared_ptr<DataModelRegistry>registerDataModels()
 {
   auto ret = std::make_shared<DataModelRegistry>();
 
-  //Models display from bottom to top in gui list
+  //register our data models to appear in the graph menu
+  ret->registerModel<SeedSourceDataModel>("Generator Inputs");
+  ret->registerModel<PerSourceDataModel>("Generator Inputs");
+  ret->registerModel<OctaveSourceDataModel>("Generator Inputs");
+  ret->registerModel<LacSourceDataModel>("Generator Inputs");
+  ret->registerModel<FreqSourceDataModel>("Generator Inputs");
+  ret->registerModel<LnRidgedMultiModel>("Generators");
+  ret->registerModel<QualitySourceDataModel>("Generator Inputs");
+  ret->registerModel<LnPerlinModel>("Generators");
+  ret->registerModel<LnBillowModel>("Generators");
 
-  //notes node
-  ret->registerModel<TextSourceDataModel>("Text");
+  ret->registerModel<LnHeightMapBuilder>("Heightmap Generation");
+  ret->registerModel<ResolutionSourceDataModel>("Heightmap Generation");
+  ret->registerModel<BoundsSourceDataModel>("Heightmap Generation");
 
-  ret->registerModel<View3DModel>("3D");
+  ret->registerModel<LnLightBrightnessModel>("Rendering");
+  ret->registerModel<LnLightContrastModel>("Rendering");
+  ret->registerModel<LnAutoGradientModel>("Rendering");
+  ret->registerModel<ColourSourceDataModel>("Rendering");
 
-  //number input
-  //ret->registerModel<NumberSourceDataModel>("Number");
-  ret->registerModel<SeedSourceDataModel>("Number");
-  ret->registerModel<PerSourceDataModel>("Number");
-  ret->registerModel<OctaveSourceDataModel>("Number");
-  ret->registerModel<LacSourceDataModel>("Number");
-  ret->registerModel<FreqSourceDataModel>("Number");
-
-  //image nodes
   ret->registerModel<ImageShowModel>("Image");
   ret->registerModel<ImageLoaderModel>("Image");
   ret->registerModel<ImageWriterModel>("Image");
-  ret->registerModel<ImageRenderModel>("libNoise");
-  ret->registerModel<PreviewWriterModel>("Image");
+  ret->registerModel<ImageRenderModel>("Rendering");
+  ret->registerModel<PreviewWriterModel>("Preview");
 
 
-  //libnoise nodes
-  ret->registerModel<LnPerlinModel>("libNoise");
-  ret->registerModel<LnBillowModel>("libNoise");
-  ret->registerModel<LnRidgedMultiModel>("libNoise");
-  ret->registerModel<QualitySourceDataModel>("libNoise");
-  ret->registerModel<LnHeightMapBuilder>("libNoise");
-  ret->registerModel<ResolutionSourceDataModel>("libNoise");
-  ret->registerModel<BoundsSourceDataModel>("libNoise");
-
-  ret->registerModel<LnLightBrightnessModel>("libNoise");
-  ret->registerModel<LnLightContrastModel>("libNoise");
-  ret->registerModel<LnAutoGradientModel>("libNoise");
-  ret->registerModel<ColourSourceDataModel>("libNoise");
+  ret->registerModel<TextSourceDataModel>("Notes");
+  ret->registerModel<View3DModel>("Preview");
 
   ///scale bias needs work before being stable
   //ret->registerModel<LnScaleBiasModel>("libNoise");
   //ret->registerModel<BiasSourceDataModel>("libNoise");
   //ret->registerModel<ScaleSourceDataModel>("libNoise");
 
-  //ret->registerModel<NaiveDataModel>();
-
   return ret;
 }
 
+//We can set the graph styles
 static void setStyle()
 {
   ConnectionStyle::setConnectionStyle(
@@ -129,6 +115,7 @@ int main(int argc, char *argv[])
 {
   QApplication app(argc, argv);
 
+  //all the bits to set the profile to allow QOpenGLWidget to work
   QSurfaceFormat format;
   format.setSamples(4);
   #if defined(__APPLE__)
@@ -147,6 +134,7 @@ int main(int argc, char *argv[])
 
   setStyle();
 
+  //add our widgets and menus
   QWidget mainWidget;
 
   auto menuBar    = new QMenuBar();

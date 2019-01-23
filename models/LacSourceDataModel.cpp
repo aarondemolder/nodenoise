@@ -7,6 +7,7 @@
 
 #include "noise/noise.h"
 
+//This node creates our LACUNARITY values for noise generation
 LacSourceDataModel::LacSourceDataModel(): _spinBox(new QDoubleSpinBox())
 {
   _spinBox->setRange(1.5, 3.5);

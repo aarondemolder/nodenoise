@@ -7,6 +7,7 @@
 
 #include "noise/noise.h"
 
+//This node allows the user to specify a seed for noise generation
 SeedSourceDataModel::SeedSourceDataModel(): _lineEdit(new QLineEdit())
 {
   _lineEdit->setValidator(new QDoubleValidator());

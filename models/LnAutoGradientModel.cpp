@@ -7,6 +7,7 @@
 
 #include "noise/noise.h"
 
+//This node allows the user to select a terrain renderer gradient type with a combobox
 LnAutoGradientModel::LnAutoGradientModel(): _comboBox(new QComboBox())
 {
   _comboBox->addItem("Build Grayscale Gradient");

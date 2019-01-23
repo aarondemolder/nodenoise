@@ -9,9 +9,11 @@
 #include <QPixmap>
 #include <QImageWriter>
 
-
+//This node generates RidgedMulti noise using user inputs
 LnRidgedMultiModel::LnRidgedMultiModel() : _label(new QLabel("RidgedMulti Noise Module"))
 {
+    //same click fix as other generators
+    _label->installEventFilter(this);
     defaultImgRenderer();
 }
 
@@ -37,33 +39,23 @@ unsigned int LnRidgedMultiModel::nPorts(PortType portType) const
   return result;
 }
 
-
+//click fix event
 bool LnRidgedMultiModel::eventFilter(QObject *object, QEvent *event)
 {
   if (object == _label)
   {
-    int w = _label->width();
-    int h = _label->height();
-
     if (event->type() == QEvent::MouseButtonPress)
     {
-
-      _label->setPixmap(_pixmap.scaled(w, h, Qt::KeepAspectRatio));
-
-      emit dataUpdated(2);
+      emit dataUpdated(1);
 
       return true;
-    }
-    else if (event->type() == QEvent::Resize)
-    {
-      if (!_pixmap.isNull())
-        _label->setPixmap(_pixmap.scaled(w, h, Qt::KeepAspectRatio));
     }
   }
 
   return false;
 }
 
+//update image output if generation occurs
 void LnRidgedMultiModel::onPixmapEdited(QPixmap const &pixmap)
 {
   Q_UNUSED(pixmap);
@@ -74,6 +66,7 @@ void LnRidgedMultiModel::onPixmapEdited(QPixmap const &pixmap)
 
 }
 
+//generates noise using user input
 void LnRidgedMultiModel::setInData(std::shared_ptr<NodeData> data, int)
 {
   auto freqData = std::dynamic_pointer_cast<FreqData>(data);
@@ -118,8 +111,7 @@ void LnRidgedMultiModel::setInData(std::shared_ptr<NodeData> data, int)
     }
   }
 
-  ///image preview processing
-
+  //image preview processing
   utils::NoiseMap heightMap;
   utils::NoiseMapBuilderPlane heightMapBuilder;
 
@@ -164,6 +156,7 @@ void LnRidgedMultiModel::setInData(std::shared_ptr<NodeData> data, int)
 
 }
 
+//ensures data exists to send to heightmap builder even if no input connections are made
 void LnRidgedMultiModel::defaultImgRenderer()
 {
 

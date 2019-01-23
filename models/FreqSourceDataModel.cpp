@@ -7,17 +7,22 @@
 
 #include "noise/noise.h"
 
+//This node creates our frequency values for noise generation
+//Create and set our frequency spinbox and values, connect this to allow emitting data
 FreqSourceDataModel::FreqSourceDataModel(): _spinBox(new QDoubleSpinBox())
 {
+  //default values
   _spinBox->setRange(0.01,10000);
   _spinBox->setSingleStep(1);
   connect(_spinBox, QOverload<const QString &>::of(&QDoubleSpinBox::valueChanged), this, &FreqSourceDataModel::onSpinEdited );
 
+  //even though we set default values using the perlin model, we should probably add options to load the default values for other generation types
+  //this works for now, though
   _spinBox->setValue(noise::module::DEFAULT_PERLIN_FREQUENCY);
 
 }
 
-
+//value saving
 QJsonObject FreqSourceDataModel::save() const
 {
   QJsonObject modelJson = NodeDataModel::save();
@@ -27,7 +32,7 @@ QJsonObject FreqSourceDataModel::save() const
   return modelJson;
 }
 
-
+//value restoring
 void FreqSourceDataModel::restore(QJsonObject const &p)
 {
   QJsonValue v = p["number"];
@@ -46,7 +51,7 @@ void FreqSourceDataModel::restore(QJsonObject const &p)
   }
 }
 
-
+//port configuration
 unsigned int FreqSourceDataModel::nPorts(PortType portType) const
 {
   unsigned int result = 1;
@@ -67,7 +72,7 @@ unsigned int FreqSourceDataModel::nPorts(PortType portType) const
   return result;
 }
 
-
+//emit frequency output if value changed
 void FreqSourceDataModel::onSpinEdited()
 {
   double number = _spinBox->value();
@@ -76,13 +81,13 @@ void FreqSourceDataModel::onSpinEdited()
   emit dataUpdated(0);
 }
 
-
+//configure data output type
 NodeDataType FreqSourceDataModel::dataType(PortType, PortIndex) const
 {
   return FreqData().type();
 }
 
-
+//node data return
 std::shared_ptr<NodeData>FreqSourceDataModel::outData(PortIndex)
 {
   return _number;

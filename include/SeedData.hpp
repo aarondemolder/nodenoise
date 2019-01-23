@@ -5,8 +5,7 @@
 using QtNodes::NodeDataType;
 using QtNodes::NodeData;
 
-/// The class can potentially incapsulate any user data which
-/// need to be transferred within the Node Editor graph
+//Class used to describe the Seed values used by the noise generators
 class SeedData : public NodeData
 {
 public:

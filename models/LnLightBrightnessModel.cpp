@@ -7,6 +7,7 @@
 
 #include "noise/noise.h"
 
+//This node sets the image renderer light brightness
 LnLightBrightnessModel::LnLightBrightnessModel(): _spinBox(new QDoubleSpinBox())
 {
   _spinBox->setRange(0.0,10);

@@ -12,49 +12,59 @@
 
 #include "noise/noise.h"
 
+//This node is our noise generation bounds source
+//Create and set our bounds spinboxes within a Group
 BoundsSourceDataModel::BoundsSourceDataModel(): _boundsGroup(new QGroupBox(tr("Noise Bound Coords")))
 {
+    //main group titles
     _boundsGroup->setAlignment(4);
     _boundsGroup->setTitle("X    -    Z");
 
+    //create spinboxes
     _lowerXBound = new QDoubleSpinBox();
     _upperXBound = new QDoubleSpinBox();
     _lowerZBound = new QDoubleSpinBox();
     _upperZBound = new QDoubleSpinBox();
 
+    //new layout to combine widgets
     QHBoxLayout *vboxTop = new QHBoxLayout;
 
+    //X value widgets
     QVBoxLayout *vbox1 = new QVBoxLayout;
     vbox1->addWidget(_lowerXBound);
     vbox1->addWidget(_upperXBound);
     vbox1->addStretch(1);
 
+    //Z value widgets
     QVBoxLayout *vbox2 = new QVBoxLayout;
     vbox2->addWidget(_lowerZBound);
     vbox2->addWidget(_upperZBound);
     vbox2->addStretch(1);
 
+    //Divide widgets with a line
     QVBoxLayout *vbox3 = new QVBoxLayout;
     QFrame *vLine = new QFrame();
     vLine->setFrameShape(QFrame::VLine);
     vLine->setFrameShadow(QFrame::Raised);
-
     vbox3->addWidget(vLine);
 
+    //Create spinbox to basically quickly skip through the coherent noise bounds
     _coherenceCount = new QDoubleSpinBox();
 
     _coherenceCount->setValue(0.0);
     _coherenceCount->setSingleStep(5.0);
 
+    //set values
     _lowerXBound->setValue(0.0);
     _upperXBound->setValue(5.0);
     _lowerZBound->setValue(1.0+_coherenceCount->value());
     _upperZBound->setValue(6.0+_coherenceCount->value());
 
+    //add extra spinbox to layout
     QVBoxLayout *vbox4 = new QVBoxLayout;
     vbox4->addWidget(_coherenceCount);
 
-
+    //add layouts to group
     vboxTop->addLayout(vbox1);
     vboxTop->addLayout(vbox3);
     vboxTop->addLayout(vbox2);
@@ -62,6 +72,7 @@ BoundsSourceDataModel::BoundsSourceDataModel(): _boundsGroup(new QGroupBox(tr("N
     vboxTop->addStretch(2);
     _boundsGroup->setLayout(vboxTop);
 
+    //connect all the spinboxes to appropriate functions
     connect(_coherenceCount, QOverload<const QString &>::of(&QDoubleSpinBox::valueChanged), this, &BoundsSourceDataModel::onCountEdited );
 
     connect(_lowerXBound, QOverload<const QString &>::of(&QDoubleSpinBox::valueChanged), this, &BoundsSourceDataModel::onGroupEdited );
@@ -72,7 +83,7 @@ BoundsSourceDataModel::BoundsSourceDataModel(): _boundsGroup(new QGroupBox(tr("N
 
 }
 
-
+//Save spinbox values - should probably save coherence value
 QJsonObject BoundsSourceDataModel::save() const
 {
   QJsonObject modelJson = NodeDataModel::save();
@@ -88,7 +99,7 @@ QJsonObject BoundsSourceDataModel::save() const
   return modelJson;
 }
 
-
+//restore spinbox values
 void BoundsSourceDataModel::restore(QJsonObject const &p)
 {
   QJsonValue v1 = p["numberXL"];
@@ -119,7 +130,7 @@ void BoundsSourceDataModel::restore(QJsonObject const &p)
   }
 }
 
-
+//configure ports
 unsigned int BoundsSourceDataModel::nPorts(PortType portType) const
 {
   unsigned int result = 1;
@@ -140,6 +151,7 @@ unsigned int BoundsSourceDataModel::nPorts(PortType portType) const
   return result;
 }
 
+//when coherence count is edited update spin boxes and emit
 void BoundsSourceDataModel::onCountEdited()
 {
     _lowerZBound->setValue(1.0+_coherenceCount->value());
@@ -154,6 +166,7 @@ void BoundsSourceDataModel::onCountEdited()
     emit dataUpdated(0);
 }
 
+//when spinboxes are edited, emit
 void BoundsSourceDataModel::onGroupEdited()
 {
   double numberXL = _lowerXBound->value();
@@ -165,13 +178,13 @@ void BoundsSourceDataModel::onGroupEdited()
   emit dataUpdated(0);
 }
 
-
+//Configure node output data type
 NodeDataType BoundsSourceDataModel::dataType(PortType, PortIndex) const
 {
   return BoundsData().type();
 }
 
-
+//node data output
 std::shared_ptr<NodeData>BoundsSourceDataModel::outData(PortIndex)
 {
   return _bounds;

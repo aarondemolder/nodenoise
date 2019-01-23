@@ -7,6 +7,7 @@
 
 #include "noise/noise.h"
 
+//This node allows the user to set the resolution for heightmap generation
 ResolutionSourceDataModel::ResolutionSourceDataModel(): _comboBox(new QComboBox())
 {
   _comboBox->addItem("256x256");

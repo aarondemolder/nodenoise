@@ -2,7 +2,6 @@
 
 #include "LnPerlinModel.hpp"
 
-//#include "DecimalData.hpp"
 #include "PixmapData.hpp"
 
 #include <QtCore/QEvent>
@@ -10,7 +9,8 @@
 #include <noise/noise.h>
 #include <noiseutils.h>
 
-
+//This node is meant to make a copy of the input generator and perform a scale bias operation, and output a heightmap
+//It was crashing a lot, so I removed it in this version of nodenoise
 LnScaleBiasModel::LnScaleBiasModel() : _label(new QLabel("Scale Bias"))
 {
 
@@ -25,8 +25,11 @@ LnScaleBiasModel::LnScaleBiasModel() : _label(new QLabel("Scale Bias"))
     //prevents crash in case no bounds are set
     //_heightMapBuilder.SetBounds(6.0,10.0,1.0,5.0);
 
+    //bias and scale values are set like this
 //    _myScaleModule.SetBias(0.0);
 //    _myScaleModule.SetScale(0.0);
+
+    //perhaps we need to generate a default noise - such as perlin, and perform a default scale bias generation to prevent crashing
 
 }
 

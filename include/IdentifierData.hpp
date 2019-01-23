@@ -5,6 +5,7 @@
 using QtNodes::NodeData;
 using QtNodes::NodeDataType;
 
+//Class to describe our ID data, created by the noise generator and used by the heightmap generator
 class IdentifierData : public NodeData
 {
 public:

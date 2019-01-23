@@ -13,7 +13,6 @@
 
 #include "PixmapData.hpp"
 
-
 #include <nodes/NodeData>
 #include <nodes/NodeDataModel>
 
@@ -28,9 +27,7 @@ using QtNodes::NodeDataModel;
 using QtNodes::NodeDataType;
 
 
-
-/// The model dictates the number of inputs and outputs for the Node.
-/// In this example it has no logic.
+//The class dictates the node settings and objects such as caption, number of inputs and outputs and more.
 class ImageRenderModel : public NodeDataModel
 {
   Q_OBJECT
@@ -62,6 +59,10 @@ public:
   QWidget *embeddedWidget() override { return _label; }
 
   bool resizable() const override { return true; }
+
+protected:
+
+  bool eventFilter(QObject *object, QEvent *event) override;
 
 public:
 
@@ -116,7 +117,9 @@ private:
 
   int _resolution = 256;
 
-  int m_heightMapSet = 0;
+  int _resolutionSet = 0;
+
+  int _heightMapSet = 0;
 
   utils::RendererImage renderer;
 
