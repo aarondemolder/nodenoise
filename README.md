@@ -36,3 +36,7 @@ Use [NNPRV](https://github.com/aarondemolder/NNPRV) to preview terrain as your g
 Link to a [handy fork of libnoise that uses cmake instead of static makefiles by qknight.](https://github.com/qknight/libnoise)
 
 A demo .flow file is provided in flows/perlin_demo.flow
+
+Video:
+
+[![video preview](https://img.youtube.com/vi/8fXhktoyAAU/maxresdefault.jpg)](https://www.youtube.com/watch?v=8fXhktoyAAU)
