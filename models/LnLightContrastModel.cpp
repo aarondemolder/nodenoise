@@ -9,7 +9,7 @@
 
 LnLightContrastModel::LnLightContrastModel(): _spinBox(new QDoubleSpinBox())
 {
-  _spinBox->setRange(0.0,10);
+  _spinBox->setRange(0.1,10);
   _spinBox->setSingleStep(0.1);
   connect(_spinBox, QOverload<const QString &>::of(&QDoubleSpinBox::valueChanged), this, &LnLightContrastModel::onSpinEdited );
 

@@ -2,7 +2,6 @@
 
 #include "LnPerlinModel.hpp"
 
-//#include "DecimalData.hpp"
 #include "PixmapData.hpp"
 
 #include <QtCore/QEvent>
@@ -20,10 +19,17 @@ LnHeightMapBuilder::LnHeightMapBuilder() : _label(new QLabel("LnHeightMapBuilder
     f.setItalic(true);
     _label->setFont(f);
     _label->setFixedSize(200, 200);
-//    _label->installEventFilter(this);
 
     //prevents crash in case no bounds are set
     _heightMapBuilder.SetBounds(6.0,10.0,1.0,5.0);
+
+    //prevents crash if heightmap is plugged into image renderer without a generator
+    noise::module::Perlin perlinBuilder;
+
+    _heightMapBuilder.SetSourceModule (perlinBuilder);
+    _heightMapBuilder.SetDestNoiseMap (_heightMap);
+    _heightMapBuilder.SetDestSize (256, 256);
+    _heightMapBuilder.Build ();
 
 }
 
@@ -60,24 +66,16 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
     if (boundsData)
     {
 
-        if ((boundsData->numberXL()) < (boundsData->numberXU()))
+        if(boundsData->numberXL() >= boundsData->numberXU() || boundsData->numberZL() >= boundsData->numberZU())
         {
-            if ((boundsData->numberZL()) < (boundsData->numberZU()))
-            {
-                _heightMapBuilder.SetBounds(boundsData->numberXL(),boundsData->numberXU(),boundsData->numberZL(),boundsData->numberZU());
-                _label->setText("Bounds Set");
-                _boundSet = 1;
-            }
-            else
-            {
-                _label->setText("INVALID Z BOUNDS COORD");
-                _boundSet = 0;
-            }
+            _label->setText("INVALID BOUNDS");
+            _boundSet = 0;
         }
         else
         {
-            _label->setText("INVALID X BOUNDS COORD");
-            _boundSet = 0;
+            _heightMapBuilder.SetBounds(boundsData->numberXL(),boundsData->numberXU(),boundsData->numberZL(),boundsData->numberZU());
+            _label->setText("Bounds Set");
+            _boundSet = 1;
         }
 
     }
@@ -98,6 +96,7 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
           _resSize = 256;
           _resolution = _resSize;
           _label->setText("256 Resolution Set");
+          emit dataUpdated(0);
       }
 
       if (_resSet == 1)
@@ -105,6 +104,7 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
           _resSize = 512;
           _resolution = _resSize;
           _label->setText("512 Resolution Set");
+          emit dataUpdated(0);
       }
 
       if (_resSet == 2)
@@ -112,6 +112,7 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
           _resSize = 1024;
           _resolution = _resSize;
           _label->setText("1024 Resolution Set");
+          emit dataUpdated(0);
       }
 
       if (_resSet == 3)
@@ -119,6 +120,7 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
           _resSize = 2048;
           _resolution = _resSize;
           _label->setText("2048 Resolution Set");
+          emit dataUpdated(0);
       }
 
       if (_resSet == 4)
@@ -126,6 +128,7 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
           _resSize = 4096;
           _resolution = _resSize;
           _label->setText("4096 Resolution Set");
+          emit dataUpdated(0);
       }
     }
 

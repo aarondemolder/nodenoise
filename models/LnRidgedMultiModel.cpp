@@ -24,7 +24,7 @@ unsigned int LnRidgedMultiModel::nPorts(PortType portType) const
   switch (portType)
   {
     case PortType::In:
-      result = 6;
+      result = 5;
       break;
 
     case PortType::Out:

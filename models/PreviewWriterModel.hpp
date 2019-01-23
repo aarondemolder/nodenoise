@@ -76,9 +76,6 @@ public:
 
   QWidget *embeddedWidget() override { return _label; }
 
-protected:
-
-  bool eventFilter(QObject *object, QEvent *event) override;
 
 private:
 

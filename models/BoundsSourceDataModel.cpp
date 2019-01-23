@@ -22,13 +22,6 @@ BoundsSourceDataModel::BoundsSourceDataModel(): _boundsGroup(new QGroupBox(tr("N
     _lowerZBound = new QDoubleSpinBox();
     _upperZBound = new QDoubleSpinBox();
 
-    _lowerXBound->setValue(6.0);
-    _upperXBound->setValue(10.0);
-    _lowerZBound->setValue(1.0);
-    _upperZBound->setValue(5.0);
-
-    //NEED TO ADD VALUE CHECKS TO PREVENT BOUND SETTING EXCEPTIONS
-
     QHBoxLayout *vboxTop = new QHBoxLayout;
 
     QVBoxLayout *vbox1 = new QVBoxLayout;
@@ -47,13 +40,29 @@ BoundsSourceDataModel::BoundsSourceDataModel(): _boundsGroup(new QGroupBox(tr("N
     vLine->setFrameShadow(QFrame::Raised);
 
     vbox3->addWidget(vLine);
-    //vbox3->addWidget(displayText);
+
+    _coherenceCount = new QDoubleSpinBox();
+
+    _coherenceCount->setValue(0.0);
+    _coherenceCount->setSingleStep(5.0);
+
+    _lowerXBound->setValue(0.0);
+    _upperXBound->setValue(5.0);
+    _lowerZBound->setValue(1.0+_coherenceCount->value());
+    _upperZBound->setValue(6.0+_coherenceCount->value());
+
+    QVBoxLayout *vbox4 = new QVBoxLayout;
+    vbox4->addWidget(_coherenceCount);
+
 
     vboxTop->addLayout(vbox1);
     vboxTop->addLayout(vbox3);
     vboxTop->addLayout(vbox2);
+    vboxTop->addLayout(vbox4);
     vboxTop->addStretch(2);
     _boundsGroup->setLayout(vboxTop);
+
+    connect(_coherenceCount, QOverload<const QString &>::of(&QDoubleSpinBox::valueChanged), this, &BoundsSourceDataModel::onCountEdited );
 
     connect(_lowerXBound, QOverload<const QString &>::of(&QDoubleSpinBox::valueChanged), this, &BoundsSourceDataModel::onGroupEdited );
     connect(_upperXBound, QOverload<const QString &>::of(&QDoubleSpinBox::valueChanged), this, &BoundsSourceDataModel::onGroupEdited );
@@ -131,6 +140,19 @@ unsigned int BoundsSourceDataModel::nPorts(PortType portType) const
   return result;
 }
 
+void BoundsSourceDataModel::onCountEdited()
+{
+    _lowerZBound->setValue(1.0+_coherenceCount->value());
+    _upperZBound->setValue(6.0+_coherenceCount->value());
+
+    double numberXL = _lowerXBound->value();
+    double numberXU = _upperXBound->value();
+    double numberZL = _lowerZBound->value();
+    double numberZU = _upperZBound->value();
+
+    _bounds = std::make_shared<BoundsData>(numberXL, numberXU, numberZL, numberZU);
+    emit dataUpdated(0);
+}
 
 void BoundsSourceDataModel::onGroupEdited()
 {

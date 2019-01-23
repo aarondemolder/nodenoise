@@ -62,6 +62,8 @@ private slots:
 
   void onGroupEdited();
 
+  void onCountEdited();
+
 private:
 
   std::shared_ptr<BoundsData> _bounds;
@@ -77,6 +79,8 @@ private:
   QDoubleSpinBox *_lowerZBound;
 
   QDoubleSpinBox *_upperZBound;
+
+  QDoubleSpinBox *_coherenceCount;
 
 
 

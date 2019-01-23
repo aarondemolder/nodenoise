@@ -22,7 +22,6 @@ ImageRenderModel::ImageRenderModel() : _label(new QLabel("ImageRender Model"))
     _label->setFixedSize(200, 200);
     _label->installEventFilter(this);
 
-
 }
 
 
@@ -37,7 +36,7 @@ unsigned int ImageRenderModel::nPorts(PortType portType) const
       break;
 
     case PortType::Out:
-      result = 2;
+      result = 1.;
 
     default:
       break;
@@ -45,35 +44,6 @@ unsigned int ImageRenderModel::nPorts(PortType portType) const
 
   return result;
 }
-
-
-bool ImageRenderModel::eventFilter(QObject *object, QEvent *event)
-{
-  if (object == _label)
-  {
-    int w = _label->width();
-    int h = _label->height();
-
-    if (event->type() == QEvent::Resize)
-    {
-        _label->setPixmap(_pixmap.scaled(w, h, Qt::KeepAspectRatio));
-    }
-  }
-
-  return false;
-}
-
-void ImageRenderModel::onTextEdited(QString const &string)
-{
-  Q_UNUSED(string);
-
-  //std::cout<<"FreqOut "<< _myPerlinModule->GetFrequency()<<"\n";
-
-  emit dataUpdated(0);
-
-}
-
-
 
 
 void ImageRenderModel::setInData(std::shared_ptr<NodeData> data, int)
@@ -109,6 +79,7 @@ void ImageRenderModel::setInData(std::shared_ptr<NodeData> data, int)
     {
         _heightMap = heightmapData->heightMap();
         _resolution = heightmapData->resolution();
+        m_heightMapSet = 1;
     }
 
 
@@ -129,34 +100,43 @@ void ImageRenderModel::setInData(std::shared_ptr<NodeData> data, int)
         }
     }
 
-    renderer.SetSourceNoiseMap (_heightMap);
-    renderer.SetDestImage (image);
-    renderer.Render ();
+    if (m_heightMapSet == 1)
+    {
+        renderer.SetSourceNoiseMap (_heightMap);
+        renderer.SetDestImage (image);
+        renderer.Render ();
 
-    //image to pixmap
+        //image to pixmap
 
-    QImage imageOut(_resolution, _resolution, QImage::Format_RGB32);
-    QRgb value;
+        QImage imageOut(_resolution, _resolution, QImage::Format_RGB32);
+        QRgb value;
 
-    for(int x=0; x < image.GetWidth(); x++)
-        {
-            for(int y=0; y < image.GetHeight(); y++)
+        for(int x=0; x < image.GetWidth(); x++)
             {
-                    utils::Color c = image.GetValue(x,y);
-                    value = qRgb(c.red, c.green, c.blue);
-                    imageOut.setPixel(x, y, value);
+                for(int y=0; y < image.GetHeight(); y++)
+                {
+                        utils::Color c = image.GetValue(x,y);
+                        value = qRgb(c.red, c.green, c.blue);
+                        imageOut.setPixel(x, y, value);
+                }
             }
-        }
 
-    QTransform myTransform;
-    myTransform.rotate(180);
-    myTransform.scale(-1,1);
-    imageOut = imageOut.transformed(myTransform);
+        QTransform myTransform;
+        myTransform.rotate(180);
+        myTransform.scale(-1,1);
+        imageOut = imageOut.transformed(myTransform);
 
-    _pixmap = QPixmap::fromImage(imageOut);
-    _label->setPixmap(_pixmap.scaled(w, h, Qt::KeepAspectRatio));
+        _pixmap = QPixmap::fromImage(imageOut);
+        _label->setPixmap(_pixmap.scaled(w, h, Qt::KeepAspectRatio));
 
-    emit dataUpdated(0);
+        emit dataUpdated(0);
+    }
+    else
+    {
+        _label->setText("HeightMap Required");
+    }
+
+
 
 }
 

@@ -100,16 +100,6 @@ public:
     return NodeDataType();
   }
 
-protected:
-
-  bool eventFilter(QObject *object, QEvent *event) override;
-
-
-
-private slots:
-
-  void onTextEdited(QString const &string);
-
 
 
 private:
@@ -120,11 +110,13 @@ private:
 
   QColor _colour;
 
-  utils::NoiseMapBuilderPlane _heightMapBuilder;
-
   utils::NoiseMap _heightMap;
 
+  utils::NoiseMapBuilderPlane _heightMapBuilder;
+
   int _resolution = 256;
+
+  int m_heightMapSet = 0;
 
   utils::RendererImage renderer;
 

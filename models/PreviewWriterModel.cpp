@@ -76,6 +76,8 @@ void PreviewWriterModel::setInData(std::shared_ptr<NodeData> nodeData, PortIndex
           QImageWriter writerQ(fileName, "png");
           writerQ.write(preview);
 
+          _label->setText("Input Heightmap in Port 1 \n Diffuse in Port 2 \n Preview Saved");
+
 
       }
 
@@ -92,6 +94,8 @@ void PreviewWriterModel::setInData(std::shared_ptr<NodeData> nodeData, PortIndex
 
           QImageWriter writerQ(fileName, "png");
           writerQ.write(preview);
+
+          _label->setText("Input Heightmap in Port 1 \n Diffuse in Port 2 \n Preview Saved");
 
       }
 
