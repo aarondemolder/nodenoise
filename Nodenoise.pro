@@ -44,19 +44,17 @@ HEADERS+= $$PWD/include/TextData.hpp \
                 #$$PWD/include/Vec3.h
 
 
-INCLUDEPATH+=$$PWD/include \
-                /home/ademolder/include
+INCLUDEPATH+=$$PWD/include
 INCLUDEPATH+=$$PWD/nodes
-INCLUDEPATH+=/home/ademolder/include
 
 LIBS += -L/home/ademolder/lib -lnoise -lnoiseutils
 
-#for compiling on the laptop build
+#for compiling on my laptop RHEL build
 
-LIBS += -L/usr/lib64/nvidia
-LIBS += -L/home/aarondemolder/lib -lnoise -lnoiseutils
-INCLUDEPATH+=$$PWD/include \
-                /home/aarondemolder/include
+#LIBS += -L/usr/lib64/nvidia
+#LIBS += -L/home/aarondemolder/lib -lnoise -lnoiseutils
+#INCLUDEPATH+=$$PWD/include \
+#                /home/aarondemolder/include
 
 #end options for laptop build
 
