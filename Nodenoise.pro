@@ -47,6 +47,7 @@ HEADERS+= $$PWD/include/TextData.hpp \
 INCLUDEPATH+=$$PWD/include
 INCLUDEPATH+=$$PWD/nodes
 
+#should be accessible over the network
 LIBS += -L/home/ademolder/lib -lnoise -lnoiseutils
 
 #for compiling on my laptop RHEL build
@@ -65,7 +66,7 @@ UI_HEADERS_DIR=$$PWD/include
 
 RESOURCES+= $$PWD/nodes/resources/resources.qrc
 
-#NGL Seems to conflict with the node framework, gl3w related
+#NGL Seems to conflict with the node framework or qt, gl3w related
 #NGLPATH=$$(NGLDIR)
 #isEmpty(NGLPATH){
 #        message("including $HOME/NGL")
