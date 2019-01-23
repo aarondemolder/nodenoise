@@ -19,6 +19,7 @@ ImageRenderModel::ImageRenderModel() : _label(new QLabel("ImageRender Model"))
     f.setItalic(true);
     _label->setFont(f);
     _label->setFixedSize(200, 200);
+    _label->installEventFilter(this);
 
 }
 
@@ -58,6 +59,8 @@ bool ImageRenderModel::eventFilter(QObject *object, QEvent *event)
 
   return false;
 }
+
+
 
 
 //When we have a connection made to the node inputs, runs related if statements
@@ -129,10 +132,10 @@ void ImageRenderModel::setInData(std::shared_ptr<NodeData> data, int)
         renderer.SetDestImage (image);
         renderer.Render ();
 
-        if(_resolution < heightmapData->resolution())
-        {
-          _resolution = heightmapData->resolution();
-        }
+//        if(_resolution < (heightmapData->resolution())
+//        {
+//          _resolution = heightmapData->resolution();
+//        }
 
         QImage imageOut(_resolution, _resolution, QImage::Format_RGB32);
         QRgb value;
@@ -159,7 +162,6 @@ void ImageRenderModel::setInData(std::shared_ptr<NodeData> data, int)
         _label->setPixmap(_pixmap.scaled(w, h, Qt::KeepAspectRatio));
 
         emit dataUpdated(0);
-        _heightMapSet = 0;
     }
     else
     {

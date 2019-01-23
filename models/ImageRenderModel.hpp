@@ -105,7 +105,7 @@ public:
 
 private:
 
-  QLabel * _label;
+  QLabel *_label;
 
   QPixmap _pixmap;
 

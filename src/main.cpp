@@ -140,6 +140,7 @@ int main(int argc, char *argv[])
   auto menuBar    = new QMenuBar();
   auto saveAction = menuBar->addAction("Save..");
   auto loadAction = menuBar->addAction("Load..");
+  auto clearAction = menuBar->addAction("Clear..");
 
   QVBoxLayout *l = new QVBoxLayout(&mainWidget);
 
@@ -151,6 +152,7 @@ int main(int argc, char *argv[])
 
   QObject::connect(saveAction, &QAction::triggered, scene, &FlowScene::save);
   QObject::connect(loadAction, &QAction::triggered, scene, &FlowScene::load);
+  QObject::connect(clearAction, &QAction::triggered, scene, &FlowScene::clearScene);
 
   std::cout<<"Profile is "<<format.majorVersion()<<" "<<format.minorVersion()<<"\n";
 
