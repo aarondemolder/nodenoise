@@ -23,6 +23,8 @@ public:
 
   TerrainData(noise::module::ScaleBias const &myScaleModule) : _myScaleModule(myScaleModule) {}
 
+  TerrainData(noise::module::Voronoi const &myVoronoiModule) : _myVoronoiModule(myVoronoiModule) {}
+
   NodeDataType type() const override { return NodeDataType {"terrain", "Terrain"}; }
 
   noise::module::Perlin myPerlinModule() const {return _myPerlinModule;}
@@ -33,6 +35,8 @@ public:
 
   noise::module::ScaleBias myScaleModule() const {return _myScaleModule;}
 
+  noise::module::Voronoi myVoronoiModule() const {return _myVoronoiModule;}
+
 private:
 
   noise::module::Perlin _myPerlinModule;
@@ -42,6 +46,8 @@ private:
   noise::module::Billow _myBillowModule;
 
   noise::module::ScaleBias _myScaleModule;
+
+  noise::module::Voronoi _myVoronoiModule;
 
 };
 

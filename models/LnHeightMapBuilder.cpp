@@ -205,6 +205,20 @@ void LnHeightMapBuilder::setInData(std::shared_ptr<NodeData> data, int)
 
                 emit dataUpdated(0);
             }
+
+            if ((QString::compare(_idText, "voronoi")) == 0)
+            {
+                noise::module::Voronoi voronoiBuilder = terrainData->myVoronoiModule();
+
+                _heightMapBuilder.SetSourceModule (voronoiBuilder);
+                _heightMapBuilder.SetDestNoiseMap (_heightMap);
+                _heightMapBuilder.SetDestSize (_resSize, _resSize);
+                _heightMapBuilder.Build ();
+
+                _label->setText("Voronoi HeightMap Done");
+
+                emit dataUpdated(0);
+            }
         }
     }
 }

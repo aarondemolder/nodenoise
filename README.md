@@ -4,7 +4,7 @@ A node based terrain generator using Qt, [Paceholder's Nodeeditor](https://githu
 
 ### Features
 
-* Perlin, Billow & RidgedMulti coherent noise generators with value setting nodes
+* Perlin, Billow, RidgedMulti & Voronoi coherent noise generators with value setting nodes
 * Heightmap Generation with resolution & bound setting nodes
 * Image Rendering with automatic gradient generation - brightness, contrast & colour setting nodes
 * Image Exporter (for use as displacement maps), Image viewer and Image Importer

@@ -24,12 +24,15 @@
 #include "models/LnPerlinModel.hpp"
 #include "models/LnBillowModel.hpp"
 #include "models/LnRidgedMultiModel.hpp"
+#include "models/LnVoronoiModel.hpp"
 #include "models/FreqSourceDataModel.hpp"
 #include "models/LacSourceDataModel.hpp"
 #include "models/OctaveSourceDataModel.hpp"
 #include "models/PerSourceDataModel.hpp"
 #include "models/SeedSourceDataModel.hpp"
 #include "models/QualitySourceDataModel.hpp"
+#include "models/DisplacementSourceDataModel.hpp"
+#include "models/EnableDistanceDataModel.hpp"
 
 //Heightmap Gen & Rendering
 #include "models/LnHeightMapBuilder.hpp"
@@ -60,6 +63,9 @@ static std::shared_ptr<DataModelRegistry>registerDataModels()
   ret->registerModel<QualitySourceDataModel>("Generator Inputs");
   ret->registerModel<LnPerlinModel>("Generators");
   ret->registerModel<LnBillowModel>("Generators");
+  ret->registerModel<LnVoronoiModel>("Generators");
+  ret->registerModel<DisplacementSourceDataModel>("Generator Inputs");
+  ret->registerModel<EnableDistanceDataModel>("Generator Inputs");
 
   ret->registerModel<LnHeightMapBuilder>("Heightmap Generation");
   ret->registerModel<ResolutionSourceDataModel>("Heightmap Generation");
