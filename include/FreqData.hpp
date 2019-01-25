@@ -20,6 +20,7 @@ public:
 
   QString numberAsText() const { return QString::number(_number, 'f'); }
 
+
 private:
 
   double _number;

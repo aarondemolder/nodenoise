@@ -36,8 +36,31 @@ Use [NNPRV](https://github.com/aarondemolder/NNPRV) to preview terrain as your g
 
 Link to a [handy fork of libnoise that uses cmake instead of static makefiles by qknight.](https://github.com/qknight/libnoise)
 
-A demo .flow file is provided in flows/perlin_demo.flow
 
-Video:
+### Video
 
 [![video preview](https://img.youtube.com/vi/8fXhktoyAAU/maxresdefault.jpg)](https://www.youtube.com/watch?v=8fXhktoyAAU)
+
+### Setup
+To setup nodenoise & nnprv to work with each other, just make sure you clone into the same directory: (this includes the [tests](https://github.com/aarondemolder/nodenoise_tests) )
+[directory structure](https://i.imgur.com/6pfZ0bh.png)
+
+1. Open nodenoise
+2. Right click in the graph to open the node menu (you can search by typing!)
+3. Connect your nodes together and output terrains!
+
+A file demonstrating a simple graph is provided in flows/perlin_demo.flow
+You can load this with the menu bar.
+
+To create a terrain, you'll want:
+
+1. A noise generator (Perlin, Billow, RidgedMulti, Voronoi)
+  - You can alter the values in these generators
+2. A heightmap generator
+  - You can alter the resolution and generator bounds
+3. Two Image Renderers, one for a heightmap and one for a diffuse
+  - You can alter brightness, contrast and light colour, as well as add an automatic gradient
+4. An Image Writer or Preview Link
+  - Export high resolution textures for use as displacement maps in a renderer of your choice or preview your generation result in NNPRV, from here you can adjust your scale and export as OBJ
+
+That's it!
