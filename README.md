@@ -53,13 +53,9 @@ You can load this with the menu bar.
 To create a terrain, you'll want:
 
 1. A noise generator (Perlin, Billow, RidgedMulti, Voronoi)
-	You can alter the values in these generators
-2. A heightmap generator
-	You can alter the resolution and generator bounds
+2. A heightmap generator - You can alter the resolution and generator bounds
 3. Two Image Renderers, one for a heightmap and one for a diffuse
-	You can alter brightness, contrast and light colour, as well as add an automatic gradient
 4. An Image Writer or Preview Link
-	Export high resolution textures for use as displacement maps in a renderer of your choice or preview your generation result in NNPRV, from here you can adjust your scale and export as OBJ
 
 That's it!
 
