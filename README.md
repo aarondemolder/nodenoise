@@ -25,6 +25,7 @@ A node based terrain generator using Qt, [Paceholder's Nodeeditor](https://githu
 * Multi-threaded noise generation by dividing chunks set by the bounds
 * Image combiner nodes such as Add, Multiply, Divide etc
 * Heightmap clipping indicator
+* Merge ID declaration with Terrain Data 
 
 ![nodenoise graph editor](https://i.imgur.com/OIOE8md.jpg)
 
